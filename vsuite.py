@@ -88,8 +88,8 @@ def parse_args():
     Parse arguments and subcommands
     """
     parser = argparse.ArgumentParser(\
-            description='A plaintext project management system aimed at \
-            students who want a clean and powerful workflow')
+            description='Plaintext project management for those who want a\
+            clean and powerful workflow')
     subparsers = parser.add_subparsers(dest='subcommand')
     parser_init = subparsers.add_parser('init',\
             help='initialize vsuite in current directory')
