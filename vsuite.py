@@ -5,20 +5,18 @@ import argparse
 import configparser
 import getpass
 import pwd
+import sys
 
 class Project:
 
     def __init__(self):
         """
-        Initialize the project in the current directory
         Create vsuite config if it doesn't exist
         """
         self.project_path = os.getcwd()
         self.user_config_dir = os.path.expanduser('~/.config/vsuite')
         self.user_config_file = os.path.join(self.user_config_dir, 'config.ini')
         self.user_config = self.get_user_config()
-        self.user_name = self.user_config['default']['author']
-        self.init()
 
     def init(self):
         """
@@ -85,8 +83,30 @@ class Project:
         pass
 
 
+def parse_args():
+    """
+    Parse arguments and subcommands
+    """
+    parser = argparse.ArgumentParser(\
+            description='A plaintext project management system aimed at \
+            students who want a clean and powerful workflow')
+    subparsers = parser.add_subparsers(dest='subcommand')
+    parser_init = subparsers.add_parser('init',\
+            help='initialize vsuite in current directory')
+    args = parser.parse_args()
+    return (args, parser)
+
 def main():
+    """
+    Respond to subcommands, exit with code 127 without subcommands
+    """
     project = Project()
+    args, parser = parse_args()
+    if args.subcommand == 'init':
+        project.init()
+    else:
+        parser.print_help()
+        sys.exit(127)
 
 if __name__ == '__main__':
     main()
