@@ -14,9 +14,9 @@ class Project:
         Create vsuite config if it doesn't exist
         """
         self.project_path = os.getcwd()
-        self.user_config_dir = os.path.expanduser('~/.config/vsuite')
-        self.user_config_file = os.path.join(self.user_config_dir, 'config.ini')
-        self.user_config = self.get_user_config()
+        self.global_config_dir = os.path.expanduser('~/.config/vsuite')
+        self.global_config_file = os.path.join(self.global_config_dir, 'config.ini')
+        self.global_config = self.get_global_config()
 
     def init(self):
         """
@@ -31,29 +31,30 @@ class Project:
         """
         cmd = ['git', 'init']
         subprocess.run(cmd, cwd=self.project_path)
+        #
 
-    def get_user_config(self):
+    def get_global_config(self):
         """
         Return existing config if it exists
         Return and save newly-generated config if it doesn't
         """
-        if os.path.exists(self.user_config_file):
-            config = self.read_user_config()
+        if os.path.exists(self.global_config_file):
+            config = self.read_global_config()
         else:
-            config = self.init_user_config()
+            config = self.init_global_config()
         return config
 
-    def init_user_config(self):
+    def init_global_config(self):
         """
-        Create user_config_dir if it doesn't exist, and user_config_file
+        Create global_config_dir if it doesn't exist, and global_config_file
         """
         config = configparser.ConfigParser()
         config['default'] = {'csl': 'chicago',
                 'author': self.get_fullname()}
-        # Write user_config_file in user_config_dir
-        if not os.path.exists(self.user_config_dir):
-            os.makedirs(self.user_config_dir)
-        with open(self.user_config_file, 'w') as configfile:
+        # Write global_config_file in global_config_dir
+        if not os.path.exists(self.global_config_dir):
+            os.makedirs(self.global_config_dir)
+        with open(self.global_config_file, 'w') as configfile:
             config.write(configfile)
         return config
 
@@ -68,12 +69,12 @@ class Project:
         username = username.replace(",","")
         return username
 
-    def read_user_config(self):
+    def read_global_config(self):
         """
         Return existing config
         """
         config = configparser.ConfigParser()
-        config.read(self.user_config_file)
+        config.read(self.global_config_file)
         return config
 
     def copy_skel(self):
