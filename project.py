@@ -16,6 +16,7 @@ class Project(VSuite):
         """
         Initialize project
         """
+        self.global_init()
         self.git_init()
         self.copy_skel()
 

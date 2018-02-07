@@ -4,14 +4,21 @@ import configparser
 import getpass
 import pwd
 
+import project
+
 class VSuite:
 
     def __init__(self):
         """
-        Create vsuite config if it doesn't exist
+        Initialize vsuite object's constant attributes
         """
         self.global_config_dir = os.path.expanduser('~/.config/vsuite')
         self.global_config_file = os.path.join(self.global_config_dir, 'config.ini')
+
+    def global_init(self):
+        """
+        Load global config after creating it if it doesn't exist
+        """
         self.global_config = self.get_global_config()
 
     def get_global_config(self):
