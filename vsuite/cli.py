@@ -13,7 +13,7 @@ def parse_args():
     subparsers = parser.add_subparsers(dest='subcommand')
     parser_init = subparsers.add_parser('init',\
             help='initialize vsuite in current directory')
-    parser_init = subparsers.add_parser('csl',\
+    parser_csl = subparsers.add_parser('csl',\
             help='list available csl files')
     # Capital G since 'global' is a keyword which makes args.global is invalid
     parser_init.add_argument('-G', '--Global',\
