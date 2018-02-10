@@ -3,10 +3,9 @@ import subprocess
 import configparser
 import getpass
 import pwd
+import glob
 
-import project
-
-class VSuite:
+class User:
 
     def __init__(self):
         """
@@ -14,6 +13,7 @@ class VSuite:
         """
         self.global_config_dir = os.path.expanduser('~/.config/vsuite')
         self.global_config_file = os.path.join(self.global_config_dir, 'config.ini')
+        self.global_data_dir = os.path.expanduser('~/.local/share/vsuite')
 
     def global_init(self):
         """
@@ -64,3 +64,21 @@ class VSuite:
         config = configparser.ConfigParser()
         config.read(self.global_config_file)
         return config
+
+    def get_csl(self):
+        """
+        Return tuple of CSL files in csl dir
+        """
+        csl_dir = os.path.join(self.global_data_dir, 'csl')
+        os.chdir(csl_dir)
+        csl_files = glob.glob('*csl')
+        return tuple(csl_files)
+
+    def print_csl(self):
+        """
+        Print CSL files in csl dir
+        """
+        csl_files = self.get_csl()
+        for csl in csl_files:
+            print(csl)
+        return csl_files

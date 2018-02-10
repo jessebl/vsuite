@@ -1,16 +1,16 @@
 import os
 import subprocess
 import configparser
-from vsuite import VSuite
+from .user import User
 
-class Project(VSuite):
+class Project(User):
 
     def __init__(self):
         """
         Initialize vsuite for inheritance
         """
         self.project_path = os.getcwd()
-        VSuite.__init__(self)
+        User.__init__(self)
 
     def init(self):
         """
