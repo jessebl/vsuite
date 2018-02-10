@@ -37,8 +37,10 @@ class User:
         Create global_config_dir if it doesn't exist, and global_config_file
         """
         config = configparser.ConfigParser()
-        config['default'] = {'csl': 'chicago',
-                'author': self.get_fullname()}
+        config['default'] = {
+                'csl': 'chicago-fullnote-bibliography-with-ibid.csl',
+                'author': self.get_fullname(),
+                'bibliography': 'bibliography.bib'}
         # Write global_config_file in global_config_dir
         if not os.path.exists(self.global_config_dir):
             os.makedirs(self.global_config_dir)

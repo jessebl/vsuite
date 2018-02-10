@@ -11,6 +11,7 @@ class Project(User):
         """
         self.project_path = os.getcwd()
         self.project_dir = os.path.join(self.project_path, '.vsuite')
+        self.project_config = os.path.join(self.project_dir, 'config.ini')
         User.__init__(self)
 
     def init(self):
@@ -36,8 +37,18 @@ class Project(User):
         """
         if not os.path.exists(self.project_dir):
             os.makedirs(self.project_dir)
+            self.init_project_config()
         else:
             return
+
+    def init_project_config(self):
+        """
+        Copy user config into project
+        """
+        config = configparser.ConfigParser()
+        config.read(self.global_config_file)
+        with open(self.project_config, 'w') as configfile:
+            config.write(configfile)
 
     def copy_skel(self):
         """
