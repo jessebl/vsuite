@@ -4,9 +4,9 @@ title: {{ title }}
 author: {{ config['default']['author'] }}
 
 csl: .vsuite/csl/{{ config['default']['csl'] }}
-
+{% if bibliography %}
 bibliography: {{ config['default']['bibliography'] }}
-
+{% endif %}
 ---
 
 \newpage

@@ -23,6 +23,19 @@ class Project(User):
         self.global_init()
         self.git_init()
         self.create_project_dir()
+        self.create_bibliography()
+
+
+    def create_bibliography(self):
+        """
+        Create bibliography if it doesn't exist
+        """
+        config = configparser.ConfigParser()
+        config.read(self.project_config)
+        bibliography_file = config['default']['bibliography']
+        if not os.path.exists(bibliography_file):
+            with open(bibliography_file, 'w') as bib:
+                bib.write('')
 
     def git_init(self):
         """
@@ -52,11 +65,19 @@ class Project(User):
         with open(self.project_config, 'w') as configfile:
             config.write(configfile)
 
+    def check_for_project(self):
+        """
+        Verify that current directory is a project
+        """
+        if not os.path.exists(self.project_dir):
+            raise FileExistsError('Not in a vsuite project')
+
     def create_doc(self, title):
         """
         Create new document with title name from template
         Raise exception if document already exists
         """
+        self.check_for_project()
         file_extension = '.md'
         filename = title+file_extension
         # Raise exception if document already exists
@@ -70,7 +91,9 @@ class Project(User):
         jinja_loader = jinja2.FileSystemLoader('.vsuite')
         jinja_env = jinja2.Environment(loader=jinja_loader)
         template = jinja_env.get_template(template_file)
-        rendered_template = template.render(config=config, title=title)
+        bibliography = os.path.exists(config['default']['bibliography'])
+        rendered_template = template.render(config=config, title=title,\
+                bibliography=bibliography)
         # Save render to new doc
         with open(filename, 'w') as doc:
             doc.write(rendered_template)
