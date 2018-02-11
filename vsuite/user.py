@@ -85,7 +85,7 @@ class User:
         """
         Return tuple of CSL files in csl dir
         """
-        csl_dir = os.path.join(self.global_data_dir, 'csl')
+        csl_dir = os.path.join(self.global_project_files, 'csl')
         os.chdir(csl_dir)
         csl_files = glob.glob('*csl')
         return tuple(csl_files)
