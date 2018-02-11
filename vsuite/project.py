@@ -1,6 +1,7 @@
 import os
 import subprocess
 import configparser
+import jinja2
 from .user import User
 
 class Project(User):
@@ -50,8 +51,25 @@ class Project(User):
         with open(self.project_config, 'w') as configfile:
             config.write(configfile)
 
-    def copy_skel(self):
+    def create_doc(self, title):
         """
-        Copy skel directory to new project
+        Create new document with title name from template
+        Raise exception if document already exists
         """
-        pass
+        file_extension = '.md'
+        filename = title+file_extension
+        # Raise exception if document already exists
+        if os.path.exists(filename):
+            raise FileExistsError(filename + ' already exists')
+        # Read template name from settings
+        config = configparser.ConfigParser()
+        config.read(self.project_config)
+        template_file = config['default']['template']
+        # Render template
+        jinja_loader = jinja2.FileSystemLoader('.vsuite')
+        jinja_env = jinja2.Environment(loader=jinja_loader)
+        template = jinja_env.get_template(template_file)
+        rendered_template = template.render(config=config, title=title)
+        # Save render to new doc
+        with open(filename, 'w') as doc:
+            doc.write(rendered_template)

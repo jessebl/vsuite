@@ -14,6 +14,8 @@ class User:
         self.global_config_dir = os.path.expanduser('~/.config/vsuite')
         self.global_config_file = os.path.join(self.global_config_dir, 'config.ini')
         self.global_data_dir = os.path.expanduser('~/.local/share/vsuite')
+        self.global_project_files = os.path.join(self.global_data_dir,\
+                'project_files')
 
     def global_init(self):
         """
@@ -40,7 +42,8 @@ class User:
         config['default'] = {
                 'csl': 'chicago-fullnote-bibliography-with-ibid.csl',
                 'author': self.get_fullname(),
-                'bibliography': 'bibliography.bib'}
+                'bibliography': 'bibliography.bib',
+                'template': 'default.j2'}
         # Write global_config_file in global_config_dir
         if not os.path.exists(self.global_config_dir):
             os.makedirs(self.global_config_dir)
