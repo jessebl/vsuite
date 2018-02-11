@@ -15,10 +15,14 @@ def parse_args():
             help='initialize vsuite in current directory')
     parser_csl = subparsers.add_parser('csl',\
             help='list available csl files')
+    parser_new = subparsers.add_parser('new',\
+            help='create new doc from template')
     # Capital G since 'global' is a keyword which makes args.global is invalid
     parser_init.add_argument('-G', '--Global',\
             help='initialize global config',\
             action='store_true')
+    parser_new.add_argument('title',\
+            help='document title')
     args = parser.parse_args()
     return (args, parser)
 
@@ -35,6 +39,9 @@ def main():
             project_instance.init()
     elif args.subcommand == 'csl':
         project_instance.print_csl()
+    elif args.subcommand == 'new':
+        title = args.title
+        project_instance.create_doc(title)
     else:
         parser.print_help()
         sys.exit(127)
