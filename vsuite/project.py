@@ -1,6 +1,7 @@
 import os
 import subprocess
 import configparser
+import shutil
 import jinja2
 from .user import User
 
@@ -28,19 +29,19 @@ class Project(User):
         Initialize and configure git repository in project_path
         """
         cmd = ['git', 'init']
-        subprocess.run(cmd, cwd=self.project_path)
+        with open(os.devnull, 'w') as fp:
+            subprocess.run(cmd, cwd=self.project_path, stdout=fp)
 
     def create_project_dir(self):
         """
-        Create vsuite hidden project folder
-        Includes csl files
+        Create vsuite hidden project folder with project files
         Do nothing if directory already exists
         """
         if not os.path.exists(self.project_dir):
-            os.makedirs(self.project_dir)
+            shutil.copytree(self.global_project_files, self.project_dir)
             self.init_project_config()
         else:
-            return
+            raise FileExistsError('Project already initialized')
 
     def init_project_config(self):
         """
