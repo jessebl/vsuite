@@ -17,12 +17,16 @@ def parse_args():
             help='list available csl files')
     parser_new = subparsers.add_parser('new',\
             help='create new doc from template')
+    parser_make = subparsers.add_parser('make',\
+            help='make document from markdown file')
     # Capital G since 'global' is a keyword which makes args.global is invalid
     parser_init.add_argument('-G', '--Global',\
             help='initialize global config',\
             action='store_true')
     parser_new.add_argument('title',\
             help='document title')
+    parser_make.add_argument('output',\
+            help='document name with desired file extension')
     args = parser.parse_args()
     return (args, parser)
 
@@ -42,6 +46,9 @@ def main():
     elif args.subcommand == 'new':
         title = args.title
         project_instance.create_doc(title)
+    elif args.subcommand == 'make':
+        output = args.output
+        project_instance.make(output)
     else:
         parser.print_help()
         sys.exit(127)

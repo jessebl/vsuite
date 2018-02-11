@@ -79,7 +79,9 @@ class Project(User):
         """
         self.check_for_project()
         file_extension = '.md'
+        # Replace spaces in filename since make doesn't handle them
         filename = title+file_extension
+        filename = filename.replace(" ","_")
         # Raise exception if document already exists
         if os.path.exists(filename):
             raise FileExistsError(filename + ' already exists')
@@ -97,3 +99,10 @@ class Project(User):
         # Save render to new doc
         with open(filename, 'w') as doc:
             doc.write(rendered_template)
+
+    def make(self, output):
+        """
+        Use make and pandoc to generate outputs
+        """
+        cmd = ['make', '-f', os.path.join(self.project_dir, 'makefile'), output]
+        subprocess.run(cmd, cwd=self.project_path)
