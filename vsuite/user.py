@@ -32,7 +32,7 @@ class User:
         if not os.path.exists(self.global_data_dir):
             project_files_path = os.path.join(os.path.dirname(__file__),\
                     'project_files')
-            shutil.copytree(project_files_path, self.global_data_dir)
+            shutil.copytree(project_files_path, self.global_project_files)
 
     def get_global_config(self):
         """
