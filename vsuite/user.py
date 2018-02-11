@@ -4,6 +4,7 @@ import configparser
 import getpass
 import pwd
 import glob
+import shutil
 
 class User:
 
@@ -22,6 +23,16 @@ class User:
         Load global config after creating it if it doesn't exist
         """
         self.global_config = self.get_global_config()
+        self.init_global_data_dir()
+
+    def init_global_data_dir(self):
+        """
+        Copy project files to data dir
+        """
+        if not os.path.exists(self.global_data_dir):
+            project_files_path = os.path.join(os.path.dirname(__file__),\
+                    'project_files')
+            shutil.copytree(project_files_path, self.global_data_dir)
 
     def get_global_config(self):
         """
