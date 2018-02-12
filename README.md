@@ -39,6 +39,14 @@ sudo apt install pandoc pandoc-citeproc git make python3-pip
 
 ```
 
+For Fedora 27:
+
+```bash
+
+sudo dnf install pandoc pandoc-citeproc git make python3-pip
+
+```
+
 ### Install vsuite
 
 Install vsuite as a Python package using pip3 pointed to this repo:
@@ -105,9 +113,9 @@ vs make best_document.pdf
 
 ```
 
-This uses `make` along with a makefile in `.vsuite` to generate the desired if
-the source markdown file has been updated more recently than the generated
-document. Hence, you can always make sure that you have up-to-date
+This uses `make` along with a makefile in `.vsuite` to freshly generate the
+specified file unless it has been updated more recently than the source
+markdown file. Hence, you can always make sure that you have up-to-date
 documentation with `vs make`. The currently available formats are:
 
 - pdf
