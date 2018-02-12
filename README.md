@@ -9,8 +9,10 @@ its usage, to separate the conceptually-distinct tasks of writing and
 typesetting in a manner largely inspired by
 [this](http://ricardo.ecn.wfu.edu/~cottrell/wp.html)
 [essay](https://web.archive.org/web/*/http://ricardo.ecn.wfu.edu/~cottrell/wp.html).
-Take a look at the workflow in the quick start guide to see if you might
-benefit from using this software.
+Take a look at this workflow diagram and the quick start guide below to see if
+you might benefit from using this software.
+
+![workflow diagram](docs/assets/workflow diagram.png)
 
 **Note:** vsuite is considered to be in early alpha, and as such should not be
 considered reliable yet. With that said, since it is a wrapper and never puts
