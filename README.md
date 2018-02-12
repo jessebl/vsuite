@@ -57,6 +57,8 @@ not not a part of your PATH, you will need to manually add it.
 
 ## Quick Start
 
+For more detailed documentation, check the wiki as it evolves.
+
 vsuite uses the concept of project directory, in which you have various vsuite
 docs (which are simple [pandoc
 markdown](https://rmarkdown.rstudio.com/authoring_pandoc_markdown.html) files)
