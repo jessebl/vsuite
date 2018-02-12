@@ -79,9 +79,10 @@ class Project(User):
         """
         self.check_for_project()
         file_extension = '.md'
-        # Replace spaces in filename since make doesn't handle them
+        # Replace special characters in filename that make doesn't handle
         filename = title+file_extension
         filename = filename.replace(" ","_")
+        filename = filename.replace("'","")
         # Raise exception if document already exists
         if os.path.exists(filename):
             raise FileExistsError(filename + ' already exists')
