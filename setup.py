@@ -48,6 +48,7 @@ setup(
     #
     # packages=find_packages(exclude=['contrib', 'docs', 'tests']),  # Required
     packages = ['vsuite'],
+    include_package_data = True,
 
     # This field lists other packages that your project depends on to run.
     # Any package you put here will be installed by pip when your project is
