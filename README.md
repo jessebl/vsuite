@@ -21,32 +21,31 @@ backup any data that matters.
 
 ### Install required software
 
-- pandoc
+- pandoc (for rendering markdown to other formats)
 
-- pandoc-citeproc
+- pandoc-citeproc (for citations in markdown)
 
-- git
+- git (for optional versioning)
 
-- make
+- make (for simplifying rendering of markdown)
+
+- pip3 (for installing vsuite)
 
 For Ubuntu 16.04:
 
 ```bash
 
-sudo apt install pandoc pandoc-citeproc git make
+sudo apt install pandoc pandoc-citeproc git make python3-pip
 
 ```
 
 ### Install vsuite
 
-Install vsuite as a Python package using pip3 and a cloned version of this
-repo:
+Install vsuite as a Python package using pip3 pointed to this repo:
 
 ```bash
 
-git clone https://<link to this repo>
-
-pip3 install --user <path to cloned repo>
+pip3 install --user git+<URL of this repo>
 
 ```
 
