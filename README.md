@@ -2,14 +2,15 @@
 
 vsuite is a project management suite for UNIX-like OSes aimed at writers who
 want tools that help--rather than hinder--them in their writing. At its core,
-it is essentially a command-line wrapper around existing tools to simplify the
-task of using them to create markdown source files. Writing in markdown allows
-the writer, once she is up-to-speed on its usage, to separate the
-conceptually-distinct tasks of writing and typesetting, in a manner largely
-inspired by [this](http://ricardo.ecn.wfu.edu/~cottrell/wp.html)
+it is a wrapper around various technologies that makes it easy to do your
+writing in markdown files that can easily be turned into finished final
+documents. Writing in markdown allows the writer, once she is up-to-speed on
+its usage, to separate the conceptually-distinct tasks of writing and
+typesetting in a manner largely inspired by
+[this](http://ricardo.ecn.wfu.edu/~cottrell/wp.html)
 [essay](https://web.archive.org/web/*/http://ricardo.ecn.wfu.edu/~cottrell/wp.html).
-Take a look at the workflow in the quickstart guide to see if you might benefit
-from using this software.
+Take a look at the workflow in the quick start guide to see if you might
+benefit from using this software.
 
 **Note:** vsuite is considered to be in early alpha, and as such should not be
 considered reliable yet. With that said, since it is a wrapper and never puts
@@ -67,8 +68,8 @@ not not a part of your PATH, you will need to manually add it.
 
 For more detailed documentation, check the wiki as it evolves.
 
-vsuite uses the concept of project directory, in which you have various vsuite
-docs (which are simple [pandoc
+vsuite uses the concept of a project directory, in which you have various
+vsuite docs (which are simple [pandoc
 markdown](https://rmarkdown.rstudio.com/authoring_pandoc_markdown.html) files)
 accompanied by a hidden `.vsuite` directory that holds accompanying files like
 [CSL files](https://en.wikipedia.org/wiki/Citation_Style_Language) and document
@@ -81,8 +82,8 @@ vs init
 
 ```
 
-This effectively creates an empty bibliography files, initializes a git
-repository, and creates the `.vsuite` directory, including a project config
+This effectively creates an empty bibliography file, initializes a git
+repository, and creates the `.vsuite` directory which includes a project config
 file.
 
 Finally, you can get started with actually creating markdown files using
@@ -96,7 +97,7 @@ vs new <document title>
 
 This will create a file `<document title>.md`, with spaces replaced by
 underscores (since GNU make can't handle spaces...). This file is generated
-from a template by vsuite, includes a YAML header that specifies fields for
+from a template by vsuite and includes a YAML header that specifies fields for
 pandoc. This file is the one that you are meant to edit and do your work in.
 Tuning your text editor for use with markdown will be greatly helpful in this,
 and is where most productivity gains will be found.
@@ -113,7 +114,7 @@ vs make best_document.pdf
 
 ```
 
-This uses `make` along with a makefile in `.vsuite` to freshly generate the
+This uses GNU make along with a makefile in `.vsuite` to freshly generate the
 specified file unless it has been updated more recently than the source
 markdown file. Hence, you can always make sure that you have up-to-date
 documentation with `vs make`. The currently available formats are:
@@ -131,4 +132,5 @@ that isn't included yet, please submit a pull request!
 # CSL licenses
 
 The [csl files](vsuite/project_files/csl) here are licensed with their
-respective licenses by their respective copyright owners, noted within the files themselves.
+respective licenses by their respective copyright owners, noted within the
+files themselves.
