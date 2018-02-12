@@ -11,9 +11,15 @@ inspired by [this](http://ricardo.ecn.wfu.edu/~cottrell/wp.html)
 Take a look at the workflow in the quickstart guide to see if you might benefit
 from using this software.
 
+**Note:** vsuite is considered to be in early alpha, and as such should not be
+considered reliable yet. With that said, since it is a wrapper and never puts
+itself in charge of deleting or overwriting any user data, the risk of using it
+should be very minimal. It should also go without saying, but you should always
+backup any data that matters.
+
 ## Installation
 
-Required software:
+### Install required software
 
 - pandoc
 
@@ -22,6 +28,16 @@ Required software:
 - git
 
 - make
+
+For Ubuntu 16.04:
+
+```bash
+
+sudo apt install pandoc pandoc-citeproc git make
+
+```
+
+### Install vsuite
 
 Install vsuite as a Python package using pip3 and a cloned version of this
 repo:
@@ -91,7 +107,17 @@ vs make best_document.pdf
 This uses `make` along with a makefile in `.vsuite` to generate the desired if
 the source markdown file has been updated more recently than the generated
 document. Hence, you can always make sure that you have up-to-date
-documentation with `vs make`.
+documentation with `vs make`. The currently available formats are:
+
+- pdf
+
+- odt
+
+- docx
+
+Adding other formats that pandoc supports is just a trivial addition to the
+[makefile](vsuite/project_files/makefile). If you find yourself using a format
+that isn't included yet, please submit a pull request!
 
 # CSL licenses
 

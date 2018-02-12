@@ -11,7 +11,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 setup(
     name='vsuite',
 
-    version='0.1.0',
+    version='0.2.0',
 
     description='Plaintext project management for those who want a\
             clean and powerful workflow',
@@ -23,7 +23,7 @@ setup(
     author='Jesse Bulson-Lewis',
 
     classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
+        'Development Status :: 3 - Alpha',
 
         'Intended Audience :: Education',
         'Intended Audience :: End Users/Desktop',
