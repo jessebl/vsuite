@@ -8,8 +8,9 @@ in markdown allows the writer, once she is up-to-speed on its usage, to
 separate the conceptually-distinct tasks of writing and typesetting in a manner
 largely inspired by [this](http://ricardo.ecn.wfu.edu/~cottrell/wp.html)
 [essay](https://web.archive.org/web/*/http://ricardo.ecn.wfu.edu/~cottrell/wp.html).
-Take a look at this workflow diagram and the quick start guide below to see if
-you might benefit from using this software.
+Take a look at the following workflow diagram, [this
+demo](https://asciinema.org/a/162560), and the quick start guide below to see
+if you might benefit from using this software.
 
 ![workflow diagram](docs/assets/workflow diagram.png)
 
@@ -68,7 +69,9 @@ it](http://linuxg.net/how-to-set-a-new-path-in-bash-ksh-and-zsh/).
 
 ## Quick Start
 
-For more detailed documentation, check the wiki as it evolves.
+For more detailed documentation, check the wiki as it evolves. Also see the
+[demo](https://asciinema.org/a/0P06UgeiTM6EL4R8jbYdz7D7j) for an example of
+this quick start.
 
 vsuite uses the concept of a project directory, in which you have various
 vsuite docs (which are simple [pandoc
