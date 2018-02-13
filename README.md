@@ -1,13 +1,12 @@
 # vsuite
 
-vsuite is a project management suite for UNIX-like OSes aimed at writers who
-want tools that help--rather than hinder--them in their writing. At its core,
-it is a wrapper around various technologies that makes it easy to do your
-writing in markdown files that can easily be turned into finished final
-documents. Writing in markdown allows the writer, once she is up-to-speed on
-its usage, to separate the conceptually-distinct tasks of writing and
-typesetting in a manner largely inspired by
-[this](http://ricardo.ecn.wfu.edu/~cottrell/wp.html)
+vsuite is a project management suite for Linux OSes aimed at writers who want
+tools that help--rather than hinder--them in their writing. At its core, it is
+a wrapper around various technologies that makes it easy to do your writing in
+markdown files that can easily be turned into finished final documents. Writing
+in markdown allows the writer, once she is up-to-speed on its usage, to
+separate the conceptually-distinct tasks of writing and typesetting in a manner
+largely inspired by [this](http://ricardo.ecn.wfu.edu/~cottrell/wp.html)
 [essay](https://web.archive.org/web/*/http://ricardo.ecn.wfu.edu/~cottrell/wp.html).
 Take a look at this workflow diagram and the quick start guide below to see if
 you might benefit from using this software.
@@ -17,8 +16,8 @@ you might benefit from using this software.
 **Note:** vsuite is considered to be in early alpha, and as such should not be
 considered reliable yet. With that said, since it is a wrapper and never puts
 itself in charge of deleting or overwriting any user data, the risk of using it
-should be very minimal. It should also go without saying, but you should always
-backup any data that matters.
+should be very minimal. Furthermore, it should go without saying that you
+should always backup any data that matters.
 
 ## Installation
 
@@ -64,7 +63,8 @@ The program will place files in `~/.local/share/vsuite` and store its config in
 `~/.config/vsuite`. The requisite files should be placed when the program is
 run, but this has not yet been tested to any rigorous degree. Pip also creates
 a vsuite executable named `vs` at `~/.local/bin/vs`, but if that location is
-not not a part of your PATH, you will need to manually add it.
+not not a part of your PATH, you will need to [manually add
+it](http://linuxg.net/how-to-set-a-new-path-in-bash-ksh-and-zsh/).
 
 ## Quick Start
 
@@ -97,12 +97,15 @@ vs new <document title>
 
 ```
 
-This will create a file `<document title>.md`, with spaces replaced by
-underscores (since GNU make can't handle spaces...). This file is generated
-from a template by vsuite and includes a YAML header that specifies fields for
-pandoc. This file is the one that you are meant to edit and do your work in.
-Tuning your text editor for use with markdown will be greatly helpful in this,
-and is where most productivity gains will be found.
+This will create a file `<document title>.md`, after dropping or modifying
+spaces or some special characters (since GNU make really struggles with these
+things...). This file is generated from a template by vsuite and includes
+a YAML header that specifies fields for pandoc. This file is the one that you
+are meant to edit and do your work in. Tuning your text editor for use with
+markdown will be greatly helpful in this, since the whole point of this writing
+paradigm is to leave you, the writer, with more time doing actual writing. (For
+example, see [this vim configuration
+file](https://github.com/jessebl/installscripts/blob/master/configs/vim-writer/.writer.vimrc).)
 
 When you're ready to turn your markdown source into files for use by others:
 
@@ -133,6 +136,13 @@ that isn't included yet, please submit a pull request!
 
 # CSL licenses
 
-The [csl files](vsuite/project_files/csl) here are licensed with their
+The [CSL files](vsuite/project_files/csl) here are licensed with their
 respective licenses by their respective copyright owners, noted within the
 files themselves.
+
+You can find many, many more citation styles in [this
+repo](https://github.com/citation-style-language/styles) if vsuite does not
+include one that you need or want. Just place them in `.vsuite/csl` for use
+within a single project, or in `~/.local/share/vsuite/project_files/csl` for
+general use (and consult the wiki on how to tune your settings for new
+documents!).
