@@ -3,6 +3,7 @@ import subprocess
 import configparser
 import shutil
 import jinja2
+import dirsync
 from .user import User
 
 class Project(User):
@@ -50,11 +51,11 @@ class Project(User):
         Create vsuite hidden project folder with project files
         Do nothing if directory already exists
         """
-        if not os.path.exists(self.project_dir):
-            shutil.copytree(self.global_project_files, self.project_dir)
-            self.init_project_config()
-        else:
-            raise FileExistsError('Project already initialized')
+        # Create dummy method with info() method to supress dirsync output...
+        dummy_function = lambda x : None
+        dummy_logger = type('Dummy', (object,), {'info': dummy_function})
+        dirsync.sync(self.global_project_files, self.project_dir, 'sync', logger=dummy_logger)
+        self.init_project_config()
 
     def init_project_config(self):
         """
@@ -89,9 +90,10 @@ class Project(User):
         # Read template name from settings
         config = configparser.ConfigParser()
         config.read(self.project_config)
+        template_dir = os.path.relpath('.vsuite/templates')
         template_file = config['default']['template']
         # Render template
-        jinja_loader = jinja2.FileSystemLoader('.vsuite')
+        jinja_loader = jinja2.FileSystemLoader(template_dir)
         jinja_env = jinja2.Environment(loader=jinja_loader)
         template = jinja_env.get_template(template_file)
         bibliography = os.path.exists(config['default']['bibliography'])

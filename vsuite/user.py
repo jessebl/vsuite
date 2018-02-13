@@ -5,6 +5,7 @@ import getpass
 import pwd
 import glob
 import shutil
+import dirsync
 
 class User:
 
@@ -29,10 +30,12 @@ class User:
         """
         Copy project files to data dir
         """
-        if not os.path.exists(self.global_data_dir):
-            project_files_path = os.path.join(os.path.dirname(__file__),\
-                    'project_files')
-            shutil.copytree(project_files_path, self.global_project_files)
+        project_files_path = os.path.join(os.path.dirname(__file__),\
+                'project_files')
+        # Create dummy method with info() method to supress dirsync output...
+        dummy_function = lambda x : None
+        dummy_logger = type('Dummy', (object,), {'info': dummy_function})
+        dirsync.sync(project_files_path, self.global_project_files, 'sync', logger=dummy_logger)
 
     def get_global_config(self):
         """

@@ -11,7 +11,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 setup(
     name='vsuite',
 
-    version='0.2.0',
+    version='0.2.2',
 
     description='Plaintext project management for those who want a\
             clean and powerful workflow',
@@ -56,7 +56,7 @@ setup(
     #
     # For an analysis of "install_requires" vs pip's requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
-    install_requires=['jinja2'],  # Optional
+    install_requires=['jinja2', 'dirsync'],  # Optional
 
     # If there are data files included in your packages that need to be
     # installed, specify them here.
