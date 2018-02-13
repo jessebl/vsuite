@@ -11,7 +11,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 setup(
     name='vsuite',
 
-    version='0.2.2',
+    version='0.2.3',
 
     description='Plaintext project management for those who want a\
             clean and powerful workflow',

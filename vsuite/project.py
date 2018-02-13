@@ -54,7 +54,8 @@ class Project(User):
         # Create dummy method with info() method to supress dirsync output...
         dummy_function = lambda x : None
         dummy_logger = type('Dummy', (object,), {'info': dummy_function})
-        dirsync.sync(self.global_project_files, self.project_dir, 'sync', logger=dummy_logger)
+        dirsync.sync(self.global_project_files, self.project_dir, 'sync',\
+                logger=dummy_logger, create=True)
         self.init_project_config()
 
     def init_project_config(self):
