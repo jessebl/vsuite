@@ -4,6 +4,7 @@ import configparser
 import shutil
 import jinja2
 import dirsync
+import glob
 from .user import User
 
 class Project(User):
@@ -110,3 +111,43 @@ class Project(User):
         """
         cmd = ['make', '-f', os.path.join(self.project_dir, 'makefile'), output]
         subprocess.run(cmd, cwd=self.project_path)
+
+    def print_csl(self):
+        """
+        Print CSL files in csl dir
+        """
+        csl_files = self.get_csl()
+        for csl in csl_files:
+            print(csl)
+        return csl_files
+
+    def get_csl(self):
+        """
+        Return tuple of CSL files
+        If in vsuite project, files are from that project
+        Else, files are from global data dir
+        """
+        project_csl_dir = os.path.join(self.project_dir, 'csl')
+        global_csl_dir = os.path.join(self.global_data_dir, 'project_files/csl')
+        if self.in_project():
+            csl_files = self.get_csl_from_dir(project_csl_dir)
+        else:
+            csl_files = self.get_csl_from_dir(global_csl_dir)
+        return csl_files
+
+    def get_csl_from_dir(self, csl_dir):
+        """
+        Return tuple of csl files in csl dir
+        """
+        csl_paths = glob.glob(csl_dir+'/*.csl')
+        csl_files = []
+        for csl_path in csl_paths:
+            csl_file = os.path.relpath(csl_path, csl_dir)
+            csl_files.append(csl_file)
+        return tuple(csl_files)
+
+    def in_project(self):
+        """
+        Returns whether or not in project
+        """
+        return os.path.exists(self.project_dir)
