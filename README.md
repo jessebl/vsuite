@@ -3,10 +3,11 @@
 vsuite is a project management suite for Linux OSes aimed at writers who want
 tools that help--rather than hinder--them in their writing. At its core, it is
 a wrapper around various technologies that makes it easy to do your writing in
-markdown files that can easily be turned into finished final documents. Writing
-in markdown allows the writer, once she is up-to-speed on its usage, to
-separate the conceptually-distinct tasks of writing and typesetting in a manner
-largely inspired by [this](http://ricardo.ecn.wfu.edu/~cottrell/wp.html)
+[markdown](https://rmarkdown.rstudio.com/lesson-8.html) files that can easily
+be turned into finished final documents. Writing in markdown allows the writer,
+once she is up-to-speed on its usage, to separate the conceptually-distinct
+tasks of writing and typesetting in a manner largely inspired by
+[this](http://ricardo.ecn.wfu.edu/~cottrell/wp.html)
 [essay](https://web.archive.org/web/*/http://ricardo.ecn.wfu.edu/~cottrell/wp.html).
 Take a look at the following workflow diagram, [this
 demo](https://asciinema.org/a/162560), and the quick start guide below to see
@@ -74,10 +75,9 @@ For more detailed documentation, check the wiki as it evolves. Also see the
 this quick start.
 
 vsuite uses the concept of a project directory, in which you have various
-vsuite docs (which are simple [pandoc
-markdown](https://rmarkdown.rstudio.com/authoring_pandoc_markdown.html) files)
-accompanied by a hidden `.vsuite` directory that holds accompanying files like
-[CSL files](https://en.wikipedia.org/wiki/Citation_Style_Language) and document
+vsuite docs (which are simple pandoc markdown files) accompanied by a hidden
+`.vsuite` directory that holds accompanying files like [CSL
+files](https://en.wikipedia.org/wiki/Citation_Style_Language) and document
 templates. To get started using it, you need to initialize a directory as
 a vsuite directory:
 
