@@ -12,7 +12,7 @@ Take a look at the following workflow diagram, [this
 demo](https://asciinema.org/a/162560), and the quick start guide below to see
 if you might benefit from using this software.
 
-![workflow diagram](docs/assets/workflow diagram.png)
+![workflowdiagram](docs/assets/workflow_diagram.png)
 
 **Note:** vsuite is considered to be in early alpha, and as such should not be
 considered reliable yet. With that said, since it is a wrapper and never puts
