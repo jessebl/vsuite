@@ -75,7 +75,7 @@ class Project(User):
         if not os.path.exists(self.project_dir):
             raise FileExistsError('Not in a vsuite project')
 
-    def create_doc(self, title):
+    def create_doc(self, title, template_opt=None):
         """
         Create new document with title name from template
         Raise exception if document already exists
@@ -89,14 +89,15 @@ class Project(User):
         # Raise exception if document already exists
         if os.path.exists(filename):
             raise FileExistsError(filename + ' already exists')
-        # Read template name from settings
+        # Get default tempalte from project settings
         config = configparser.ConfigParser()
         config.read(self.project_config)
         template_dir = os.path.relpath('.vsuite/templates')
-        template_file = config['default']['template']
+        default_template = config['default']['template']
         # Render template
         jinja_loader = jinja2.FileSystemLoader(template_dir)
         jinja_env = jinja2.Environment(loader=jinja_loader)
+        template_file = template_opt if template_opt else default_template
         template = jinja_env.get_template(template_file)
         bibliography = os.path.exists(config['default']['bibliography'])
         rendered_template = template.render(config=config, title=title,\

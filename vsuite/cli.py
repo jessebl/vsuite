@@ -25,6 +25,8 @@ def parse_args():
             action='store_true')
     parser_new.add_argument('title',\
             help='document title')
+    parser_new.add_argument('-t', '--template',\
+            help='template file to use from template directory')
     parser_make.add_argument('output',\
             help='document name with desired file extension')
     args = parser.parse_args()
@@ -45,7 +47,8 @@ def main():
         project_instance.print_csl()
     elif args.subcommand == 'new':
         title = args.title
-        project_instance.create_doc(title)
+        template = args.template
+        project_instance.create_doc(title, template)
     elif args.subcommand == 'make':
         output = args.output
         project_instance.make(output)
