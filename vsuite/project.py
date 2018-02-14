@@ -13,7 +13,7 @@ class Project(User):
         """
         Initialize vsuite for inheritance
         """
-        self.project_path = os.getcwd()
+        self.project_path = self.get_project_dir()
         self.project_dir = os.path.join(self.project_path, '.vsuite')
         self.project_config = os.path.join(self.project_dir, 'config.ini')
         User.__init__(self)
@@ -152,3 +152,19 @@ class Project(User):
         Returns whether or not in project
         """
         return os.path.exists(self.project_dir)
+
+    def get_project_dir(self, cursor_dir=os.getcwd()):
+        """
+        Return parent dir with .vsuite dir, recursively
+        """
+        cursor_dir = os.path.abspath(cursor_dir)
+        # If in existing project root
+        in_project = os.path.exists(os.path.join(cursor_dir, '.vsuite'))
+        if in_project:
+            return cursor_dir
+        # If in filesystem root, return none
+        elif cursor_dir == '/':
+            return os.getcwd()
+        else:
+            parent_dir = os.path.abspath(os.path.join(cursor_dir, os.pardir))
+            return self.get_project_dir(parent_dir)

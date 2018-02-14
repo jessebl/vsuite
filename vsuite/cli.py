@@ -19,6 +19,8 @@ def parse_args():
             help='create new doc from template')
     parser_make = subparsers.add_parser('make',\
             help='make document from markdown file')
+    parser_dev = subparsers.add_parser('dev',\
+            help='development subcommand')
     # Capital G since 'global' is a keyword which makes args.global is invalid
     parser_init.add_argument('-G', '--Global',\
             help='initialize global config',\
@@ -52,6 +54,8 @@ def main():
     elif args.subcommand == 'make':
         output = args.output
         project_instance.make(output)
+    elif args.subcommand == 'dev':
+        print(project_instance.get_project_dir())
     else:
         parser.print_help()
         sys.exit(127)
