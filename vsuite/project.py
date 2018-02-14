@@ -92,21 +92,29 @@ class Project(User):
         # Raise exception if document already exists
         if os.path.exists(filename):
             raise FileExistsError(filename + ' already exists')
-        # Get default tempalte from project settings
         config = configparser.ConfigParser()
         config.read(self.project_config)
-        default_template = config['default']['template']
-        # Render template
-        jinja_loader = jinja2.FileSystemLoader(self.template_dir)
-        jinja_env = jinja2.Environment(loader=jinja_loader)
-        template_file = template_opt if template_opt else default_template
-        template = jinja_env.get_template(template_file)
+        template = self.get_template(config, template_opt)
         bibliography = os.path.exists(config['default']['bibliography'])
         rendered_template = template.render(config=config, title=title,\
                 bibliography=bibliography)
         # Save render to new doc
         with open(filename, 'w') as doc:
             doc.write(rendered_template)
+
+    def get_template(self, config, template_opt):
+        """
+        Return jinja_env.get_template() object
+        Takes ConfigParser() object
+        """
+        # Get default tempalte from project settings
+        default_template = config['default']['template']
+        # Render template
+        jinja_loader = jinja2.FileSystemLoader(self.template_dir)
+        jinja_env = jinja2.Environment(loader=jinja_loader)
+        template_file = template_opt if template_opt else default_template
+        template = jinja_env.get_template(template_file)
+        return template
 
     def make(self, output):
         """
