@@ -113,7 +113,7 @@ class Project(User):
         Use make and pandoc to generate outputs
         """
         cmd = ['make', '-f', os.path.join(self.project_dir, 'makefile'), output]
-        subprocess.run(cmd, cwd=self.project_path)
+        subprocess.run(cmd, cwd=os.getcwd())
 
     def print_csl(self):
         """
