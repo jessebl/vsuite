@@ -13,9 +13,12 @@ class Project(User):
         """
         Initialize vsuite for inheritance
         """
+        # self.project_path is absolute
         self.project_path = self.get_project_dir()
         self.project_dir = os.path.join(self.project_path, '.vsuite')
         self.project_config = os.path.join(self.project_dir, 'config.ini')
+        self.project_csl_dir = os.path.join(self.project_dir, 'csl')
+        self.template_dir = os.path.join(self.project_dir, 'templates')
         User.__init__(self)
 
     def init(self):
@@ -92,10 +95,9 @@ class Project(User):
         # Get default tempalte from project settings
         config = configparser.ConfigParser()
         config.read(self.project_config)
-        template_dir = os.path.relpath('.vsuite/templates')
         default_template = config['default']['template']
         # Render template
-        jinja_loader = jinja2.FileSystemLoader(template_dir)
+        jinja_loader = jinja2.FileSystemLoader(self.template_dir)
         jinja_env = jinja2.Environment(loader=jinja_loader)
         template_file = template_opt if template_opt else default_template
         template = jinja_env.get_template(template_file)
@@ -128,10 +130,9 @@ class Project(User):
         If in vsuite project, files are from that project
         Else, files are from global data dir
         """
-        project_csl_dir = os.path.join(self.project_dir, 'csl')
         global_csl_dir = os.path.join(self.global_data_dir, 'project_files/csl')
         if self.in_project():
-            csl_files = self.get_csl_from_dir(project_csl_dir)
+            csl_files = self.get_csl_from_dir(self.project_csl_dir)
         else:
             csl_files = self.get_csl_from_dir(global_csl_dir)
         return csl_files
@@ -155,7 +156,7 @@ class Project(User):
 
     def get_project_dir(self, cursor_dir=os.getcwd()):
         """
-        Return parent dir with .vsuite dir, recursively
+        Return absolute path of nearest parent dir with .vsuite directory
         """
         cursor_dir = os.path.abspath(cursor_dir)
         # If in existing project root
