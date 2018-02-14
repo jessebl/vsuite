@@ -18,7 +18,12 @@ class Project(User):
         self.project_dir = os.path.join(self.project_path, '.vsuite')
         self.project_config = os.path.join(self.project_dir, 'config.ini')
         self.project_csl_dir = os.path.join(self.project_dir, 'csl')
-        self.template_dir = os.path.join(self.project_dir, 'templates')
+        self.project_template_dir = os.path.join(self.project_dir, 'templates')
+        # dict of paths relative to project_dir
+        self.relpaths = {'project': '.',\
+                'csl_dir': 'csl',\
+                'template_dir': 'templates',\
+                'bibliography_dir': os.pardir}
         User.__init__(self)
 
     def init(self):
@@ -95,7 +100,7 @@ class Project(User):
         config = configparser.ConfigParser()
         config.read(self.project_config)
         template = self.get_template(config, template_opt)
-        bibliography = os.path.exists(config['default']['bibliography'])
+        bibliography_exists = os.path.exists(config['default']['bibliography'])
         rendered_template = template.render(config=config, title=title,\
                 bibliography=bibliography)
         # Save render to new doc
@@ -110,7 +115,7 @@ class Project(User):
         # Get default tempalte from project settings
         default_template = config['default']['template']
         # Render template
-        jinja_loader = jinja2.FileSystemLoader(self.template_dir)
+        jinja_loader = jinja2.FileSystemLoader(self.project_template_dir)
         jinja_env = jinja2.Environment(loader=jinja_loader)
         template_file = template_opt if template_opt else default_template
         template = jinja_env.get_template(template_file)
@@ -177,3 +182,12 @@ class Project(User):
         else:
             parent_dir = os.path.abspath(os.path.join(cursor_dir, os.pardir))
             return self.get_project_dir(parent_dir)
+
+
+    def get_prefixes(self):
+        """
+        Return a dict of strings whose keys are project paths (e.g.
+        self.project_csl_dir), and whose values are the paths to those
+        directories relative to the present working directory
+        """
+        pass
