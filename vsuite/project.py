@@ -104,7 +104,9 @@ class Project(User):
         config = configparser.ConfigParser()
         config.read(self.project_config)
         template = self.get_template(config, template_opt)
-        bibliography_exists = os.path.exists(config['default']['bibliography'])
+        bibliography_path = os.path.join(self.abspaths['bibliography_dir'],\
+                config['default']['bibliography'])
+        bibliography_exists = os.path.exists(bibliography_path)
         rendered_template = template.render(relpaths=self.relpaths_pwd,\
                 config=config, title=title, bibliography=bibliography_exists)
         # Save render to new doc
