@@ -25,6 +25,7 @@ class Project(User):
                 'template_dir': 'templates',\
                 'bibliography_dir': os.pardir}
         self.abspaths = self.get_abspaths()
+        self.relpaths_pwd = self.get_relpaths()
         User.__init__(self)
 
     def init(self):
@@ -195,9 +196,15 @@ class Project(User):
             abspath = os.path.join(self.project_dir, self.relpaths_project[subdir])
             abspaths[subdir] = abspath
         return abspaths
+
+    def get_relpaths(self):
         """
         Return a dict of strings whose keys are project paths (e.g.
         self.project_csl_dir), and whose values are the paths to those
         directories relative to the present working directory
         """
-        pass
+        relpaths = {}
+        for subdir in self.abspaths:
+            relpath = os.path.relpath(self.abspaths[subdir], os.getcwd())
+            relpaths[subdir] = relpath
+        return relpaths
