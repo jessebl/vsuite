@@ -20,10 +20,11 @@ class Project(User):
         self.project_csl_dir = os.path.join(self.project_dir, 'csl')
         self.project_template_dir = os.path.join(self.project_dir, 'templates')
         # dict of paths relative to project_dir
-        self.relpaths = {'project': '.',\
+        self.relpaths_project = {'project': '.',\
                 'csl_dir': 'csl',\
                 'template_dir': 'templates',\
                 'bibliography_dir': os.pardir}
+        self.abspaths = self.get_abspaths()
         User.__init__(self)
 
     def init(self):
@@ -184,7 +185,16 @@ class Project(User):
             return self.get_project_dir(parent_dir)
 
 
-    def get_prefixes(self):
+    def get_abspaths(self):
+        """Return a dict of strings whose keys are project paths (e.g.
+        self.project_csl_dir), and whose values are the absolute paths to those
+        directories
+        """
+        abspaths = {}
+        for subdir in self.relpaths_project:
+            abspath = os.path.join(self.project_dir, self.relpaths_project[subdir])
+            abspaths[subdir] = abspath
+        return abspaths
         """
         Return a dict of strings whose keys are project paths (e.g.
         self.project_csl_dir), and whose values are the paths to those
