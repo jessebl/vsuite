@@ -103,8 +103,8 @@ class Project(User):
         config.read(self.project_config)
         template = self.get_template(config, template_opt)
         bibliography_exists = os.path.exists(config['default']['bibliography'])
-        rendered_template = template.render(config=config, title=title,\
-                bibliography=bibliography)
+        rendered_template = template.render(relpaths=self.relpaths_pwd,\
+                config=config, title=title, bibliography=bibliography_exists)
         # Save render to new doc
         with open(filename, 'w') as doc:
             doc.write(rendered_template)
