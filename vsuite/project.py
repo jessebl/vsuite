@@ -44,7 +44,9 @@ class Project(User):
         """
         config = configparser.ConfigParser()
         config.read(self.project_config)
-        bibliography_file = config['default']['bibliography']
+        bibliography_name = config['default']['bibliography']
+        bibliography_file = os.path.join(self.abspaths['bibliography_dir'],\
+                bibliography_name)
         if not os.path.exists(bibliography_file):
             with open(bibliography_file, 'w') as bib:
                 bib.write('')
