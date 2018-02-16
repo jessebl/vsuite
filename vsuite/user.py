@@ -7,10 +7,14 @@ import shutil
 import dirsync
 
 class User:
+    """Represent a single user's vsuite installation
+
+    Track and manage vsuite's data files, global config, and more
+
+    """
 
     def __init__(self):
-        """
-        Initialize vsuite object's constant attributes
+        """Initialize vsuite object's constant attributes
         """
         self.global_config_dir = os.path.expanduser('~/.config/vsuite')
         self.global_config_file = os.path.join(self.global_config_dir, 'config.ini')
@@ -19,15 +23,13 @@ class User:
                 'project_files')
 
     def global_init(self):
-        """
-        Load global config after creating it if it doesn't exist
+        """Load global config after creating it if it doesn't exist
         """
         self.global_config = self.get_global_config()
         self.init_global_data_dir()
 
     def init_global_data_dir(self):
-        """
-        Copy project files to data dir
+        """Copy project files to data dir
         """
         project_files_path = os.path.join(os.path.dirname(__file__),\
                 'project_files')
@@ -38,9 +40,14 @@ class User:
                 logger=dummy_logger, create=True)
 
     def get_global_config(self):
-        """
-        Return existing config if it exists
-        Return and save newly-generated config if it doesn't
+        """Get user's global vsuite config
+
+        Get existing config if it exists
+        Get and save newly-generated config if it doesn't
+
+        Returns:
+            configparser.ConfigParser: user's global configuration
+
         """
         if os.path.exists(self.global_config_file):
             config = self.read_global_config()
@@ -49,8 +56,13 @@ class User:
         return config
 
     def init_global_config(self):
-        """
-        Create global_config_dir if it doesn't exist, and global_config_file
+        """Initialize global config
+
+        Create new config, refusing to overwrite existing one
+
+        Returns:
+            configparser.ConfigParser: user's global configuration
+
         """
         config = configparser.ConfigParser()
         config['default'] = {
@@ -66,8 +78,11 @@ class User:
         return config
 
     def get_fullname(self):
-        """
-        Return user's full name from /etc/passwd
+        """Get user's full name from /etc/passwd
+
+        Returns:
+            str: user's full name
+
         """
         username = getpass.getuser()
         pwuser = pwd.getpwnam(username)
@@ -77,8 +92,7 @@ class User:
         return username
 
     def read_global_config(self):
-        """
-        Return existing config
+        """Get existing user config
         """
         config = configparser.ConfigParser()
         config.read(self.global_config_file)
