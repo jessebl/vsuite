@@ -14,15 +14,15 @@ Take a look at the following workflow diagram and `this demo
 <https://asciinema.org/a/162560>`_ to see if you might benefit from using this
 software.
 
+.. image:: ../assets/workflow_diagram.png
+   :alt: Workflow Diagram
+
 **Note:** vsuite is considered to be in early alpha, and as such should
 not be considered reliable yet. With that said, since it is a wrapper
 and never puts itself in charge of deleting or overwriting any user
 data, the risk of using it should be very minimal. Furthermore, it
 should go without saying that you should always backup any data that
 matters.
-
-.. image:: ../assets/workflow_diagram.png
-   :alt: Workflow Diagram
 
 .. toctree::
    :maxdepth: 2
