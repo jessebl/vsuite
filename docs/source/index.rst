@@ -10,9 +10,9 @@ once she is up-to-speed on its usage, to separate the conceptually-distinct
 tasks of writing and typesetting in a manner largely inspired by `this
 <http://ricardo.ecn.wfu.edu/~cottrell/wp.html>`_ `essay
 <https://web.archive.org/web/*/http://ricardo.ecn.wfu.edu/~cottrell/wp.html>`_.
-Take a look at the following workflow diagram and `this demo
-<https://asciinema.org/a/162560>`_ to see if you might benefit from using this
-software.
+Take a look at the following workflow diagram, `this demo
+<https://asciinema.org/a/162560>`_, and the :doc:`quick start guide<quickstart>`
+to see if you might benefit from using this software.
 
 .. image:: ../assets/workflow_diagram.png
    :alt: Workflow Diagram

@@ -1,12 +1,14 @@
+.. _quickstart:
+
 Quick Start
 -----------
 
-You might want to check out [this
-demo](https://asciinema.org/a/0P06UgeiTM6EL4R8jbYdz7D7j) for an example of the
+You might want to check out `this
+demo <https://asciinema.org/a/0P06UgeiTM6EL4R8jbYdz7D7j>`_ for an example of the
 steps in this quick start.
 
 Initialize a project with ``vs init``
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 vsuite uses the concept of a project directory, in which you have
 various vsuite docs (which are simple pandoc markdown files) accompanied
@@ -47,7 +49,7 @@ configuration
 file <https://github.com/jessebl/installscripts/blob/master/configs/vim-writer/.writer.vimrc>`__.)
 
 Render your document with ``vs make``
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When you’re ready to turn your markdown source into files for use by
 others:
