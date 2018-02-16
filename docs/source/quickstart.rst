@@ -1,9 +1,12 @@
 Quick Start
 -----------
 
-For more detailed documentation, check the wiki as it evolves. Also see
-the `demo <https://asciinema.org/a/0P06UgeiTM6EL4R8jbYdz7D7j>`__ for an
-example of this quick start.
+You might want to check out [this
+demo](https://asciinema.org/a/0P06UgeiTM6EL4R8jbYdz7D7j) for an example of the
+steps in this quick start.
+
+Initialize a directory as a vsuite project
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 vsuite uses the concept of a project directory, in which you have
 various vsuite docs (which are simple pandoc markdown files) accompanied
@@ -20,6 +23,9 @@ a directory as a vsuite directory:
 This effectively creates an empty bibliography file, initializes a git
 repository, and creates the ``.vsuite`` directory which includes a
 project config file.
+
+Create a new markdown document with ``vs new``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Finally, you can get started with actually creating markdown files using
 vsuite:
@@ -39,6 +45,9 @@ since the whole point of this writing paradigm is to leave you, the
 writer, with more time doing actual writing. (For example, see `this vim
 configuration
 file <https://github.com/jessebl/installscripts/blob/master/configs/vim-writer/.writer.vimrc>`__.)
+
+Render your document
+~~~~~~~~~~~~~~~~~~~~
 
 When you’re ready to turn your markdown source into files for use by
 others:

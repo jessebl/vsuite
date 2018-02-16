@@ -15,6 +15,9 @@ if you might benefit from using this software.
 
 ![workflowdiagram](docs/assets/workflow_diagram.png)
 
+You can find the full vsuite documentation
+[here](http://vsuite.readthedocs.io).
+
 **Note:** vsuite is considered to be in early alpha, and as such should not be
 considered reliable yet. With that said, since it is a wrapper and never puts
 itself in charge of deleting or overwriting any user data, the risk of using it
@@ -70,9 +73,12 @@ it](http://linuxg.net/how-to-set-a-new-path-in-bash-ksh-and-zsh/).
 
 ## Quick Start
 
-For more detailed documentation, check the wiki as it evolves. Also see the
-[demo](https://asciinema.org/a/0P06UgeiTM6EL4R8jbYdz7D7j) for an example of
-this quick start.
+You might want to check out [this
+demo](https://asciinema.org/a/0P06UgeiTM6EL4R8jbYdz7D7j) for an example of the
+steps in this quick start. You can also find the full vsuite documentation
+[here](http://vsuite.readthedocs.io).
+
+### Initialize a directory as a vsuite project
 
 vsuite uses the concept of a project directory, in which you have various
 vsuite docs (which are simple pandoc markdown files) accompanied by a hidden
@@ -90,6 +96,8 @@ vs init
 This effectively creates an empty bibliography file, initializes a git
 repository, and creates the `.vsuite` directory which includes a project config
 file.
+
+### Create a new markdown document with `vs new`
 
 Finally, you can get started with actually creating markdown files using
 vsuite:
@@ -110,7 +118,10 @@ paradigm is to leave you, the writer, with more time doing actual writing. (For
 example, see [this vim configuration
 file](https://github.com/jessebl/installscripts/blob/master/configs/vim-writer/.writer.vimrc).)
 
+### Render your document
+
 When you're ready to turn your markdown source into files for use by others:
+
 
 ```bash
 
@@ -132,10 +143,6 @@ documentation with `vs make`. The currently available formats are:
 - odt
 
 - docx
-
-Adding other formats that pandoc supports is just a trivial addition to the
-[makefile](vsuite/project_files/makefile). If you find yourself using a format
-that isn't included yet, please submit a pull request!
 
 # CSL licenses
 
