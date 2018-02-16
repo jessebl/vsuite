@@ -29,5 +29,5 @@ matters.
    :caption: Contents:
 
    installation
-
    quickstart
+   code

@@ -8,10 +8,20 @@ import glob
 from .user import User
 
 class Project(User):
+    """Represent a project directory
+
+    The present working directory is considered to be the vsuite project root,
+    unless one of its parent directories is a project, in which case that
+    directory is considered to be.
+
+    """
 
     def __init__(self):
-        """
-        Initialize vsuite for inheritance
+        """Initialize vsuite for inheritance
+
+        Using information about the present directory, set attributes about
+        where various directories and project resources would be, if they exist.
+
         """
         # self.project_path is absolute
         self.project_path = self.get_project_dir()
@@ -29,8 +39,13 @@ class Project(User):
         User.__init__(self)
 
     def init(self):
-        """
-        Initialize project
+        """Initialize project directory
+
+        Reinitialize vsuite for the user, and initialize the present working
+        directory as a project directory. This includes creating the .vsuite
+        directory, creating and empty bibliography file, and initializing a git
+        repo.
+
         """
         self.global_init()
         self.git_init()
@@ -39,8 +54,10 @@ class Project(User):
 
 
     def create_bibliography(self):
-        """
-        Create bibliography if it doesn't exist
+        """Create bibliography if it doesn't exist
+
+        Bibliography checked and created with ``bibliography`` value from
+        project settings
         """
         config = configparser.ConfigParser()
         config.read(self.project_config)
@@ -52,17 +69,14 @@ class Project(User):
                 bib.write('')
 
     def git_init(self):
-        """
-        Initialize and configure git repository in project_path
+        """Initialize git repository in project_path
         """
         cmd = ['git', 'init']
         with open(os.devnull, 'w') as fp:
             subprocess.run(cmd, cwd=self.project_path, stdout=fp)
 
     def create_project_dir(self):
-        """
-        Create vsuite hidden project folder with project files
-        Do nothing if directory already exists
+        """Create ``.vsuite`` directory if it doesn't exist
         """
         # Create dummy method with info() method to supress dirsync output...
         dummy_function = lambda x : None
@@ -81,16 +95,26 @@ class Project(User):
             config.write(configfile)
 
     def check_for_project(self):
-        """
-        Verify that current directory is a project
+        """Verify that current directory is a project
+
+        Raises:
+            (FileExistsError): If not in a project directory
+
         """
         if not os.path.exists(self.project_dir):
             raise FileExistsError('Not in a vsuite project')
 
     def create_doc(self, title, template_opt=None):
-        """
-        Create new document with title name from template
-        Raise exception if document already exists
+        """ Create new document with title name from template
+
+        Args:
+            title (str): Title of document, used as basis for filename
+            template_opt (str): Document template to override default template
+                set in project settings
+
+        Raises:
+            (FileExistsError): If file with same name already exists
+
         """
         self.check_for_project()
         file_extension = '.md'
@@ -114,9 +138,14 @@ class Project(User):
             doc.write(rendered_template)
 
     def get_template(self, config, template_opt):
-        """
-        Return jinja_env.get_template() object
-        Takes ConfigParser() object
+        """Get template object to use for new document
+
+        Args:
+            config (ConfigParser): config of project
+
+        Returns:
+            jinja2.environment.Template: template to use
+
         """
         # Get default tempalte from project settings
         default_template = config['default']['template']
@@ -128,15 +157,20 @@ class Project(User):
         return template
 
     def make(self, output):
-        """
-        Use make and pandoc to generate outputs
+        """Use make and pandoc to generate outputs
+
+        Use makefile from .vsuite directory, which leverages pandoc to generate
+        requested outputs
+
+        Args:
+            output (str): name of argument to pass to make
+
         """
         cmd = ['make', '-f', os.path.join(self.project_dir, 'makefile'), output]
         subprocess.run(cmd, cwd=os.getcwd())
 
     def print_csl(self):
-        """
-        Print CSL files in csl dir
+        """Print CSL files available in project
         """
         csl_files = self.get_csl()
         for csl in csl_files:
@@ -144,10 +178,11 @@ class Project(User):
         return csl_files
 
     def get_csl(self):
-        """
-        Return tuple of CSL files
-        If in vsuite project, files are from that project
-        Else, files are from global data dir
+        """Get available csl files
+
+        Returns:
+            tuple: project's csl files if in project, user's csl files if not
+
         """
         global_csl_dir = os.path.join(self.global_data_dir, 'project_files/csl')
         if self.in_project():
@@ -157,8 +192,16 @@ class Project(User):
         return csl_files
 
     def get_csl_from_dir(self, csl_dir):
-        """
-        Return tuple of csl files in csl dir
+        """Return csl files in csl dir
+
+        Scan first level of directory for csl files
+
+        Args:
+            csl_dir (str): directory to scan 
+
+        Return:
+            tuple: relative path of csl files
+
         """
         csl_paths = glob.glob(csl_dir+'/*.csl')
         csl_files = []
@@ -168,14 +211,26 @@ class Project(User):
         return tuple(csl_files)
 
     def in_project(self):
-        """
-        Returns whether or not in project
+        """Returns whether or not in project
+
+        Return:
+            bool: True if in project
+
         """
         return os.path.exists(self.project_dir)
 
     def get_project_dir(self, cursor_dir=os.getcwd()):
-        """
-        Return absolute path of nearest parent dir with .vsuite directory
+        """Absolute path to consider as project directory
+
+        Use present working directory if no parent directory is a project
+        directory.
+
+        Args:
+            cursor_dir (str): directory to check for project
+
+        Returns:
+            str: absolute path
+
         """
         cursor_dir = os.path.abspath(cursor_dir)
         # If in existing project root
@@ -191,9 +246,10 @@ class Project(User):
 
 
     def get_abspaths(self):
-        """Return a dict of strings whose keys are project paths (e.g.
-        self.project_csl_dir), and whose values are the absolute paths to those
-        directories
+        """Get absolute paths of project resources
+
+        Returns:
+            dict: absolute paths of project paths (e.g. the project's csl_dir)
         """
         abspaths = {}
         for subdir in self.relpaths_project:
@@ -202,10 +258,11 @@ class Project(User):
         return abspaths
 
     def get_relpaths(self):
-        """
-        Return a dict of strings whose keys are project paths (e.g.
-        self.project_csl_dir), and whose values are the paths to those
-        directories relative to the present working directory
+        """Get paths of project resources relative to pwd
+
+        Returns:
+            dict: relative paths of project paths (e.g. the project's csl_dir)
+
         """
         relpaths = {}
         for subdir in self.abspaths:
