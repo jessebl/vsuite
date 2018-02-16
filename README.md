@@ -78,7 +78,7 @@ demo](https://asciinema.org/a/0P06UgeiTM6EL4R8jbYdz7D7j) for an example of the
 steps in this quick start. You can also find the full vsuite documentation
 [here](http://vsuite.readthedocs.io).
 
-### Initialize a directory as a vsuite project
+### Initialize a project with `vs init`
 
 vsuite uses the concept of a project directory, in which you have various
 vsuite docs (which are simple pandoc markdown files) accompanied by a hidden
@@ -118,7 +118,7 @@ paradigm is to leave you, the writer, with more time doing actual writing. (For
 example, see [this vim configuration
 file](https://github.com/jessebl/installscripts/blob/master/configs/vim-writer/.writer.vimrc).)
 
-### Render your document
+### Render your document with `vs make`
 
 When you're ready to turn your markdown source into files for use by others:
 
