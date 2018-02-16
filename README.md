@@ -11,7 +11,7 @@ tasks of writing and typesetting in a manner largely inspired by
 [essay](https://web.archive.org/web/*/http://ricardo.ecn.wfu.edu/~cottrell/wp.html).
 Take a look at the following workflow diagram, [this
 demo](https://asciinema.org/a/162560), and the [quick start
-guide](http://vsuite.readthedocs.io/en/latest/quickstart.html) to try to gauge
+guide](https://vsuite.readthedocs.io/en/latest/quickstart.html) to try to gauge
 if this software and its workflow might help you.
 
 ![workflowdiagram](docs/assets/workflow_diagram.png)
@@ -22,11 +22,11 @@ itself in charge of deleting or overwriting any user data, the risk of using it
 should be very minimal. Furthermore, it should go without saying that you
 should always backup any data that matters.
 
-- [Installation](http://vsuite.readthedocs.io/en/latest/installation.html)
+- [Installation](https://vsuite.readthedocs.io/en/latest/installation.html)
 
-- [Quick Start](http://vsuite.readthedocs.io/en/latest/quickstart.html)
+- [Quick Start](https://vsuite.readthedocs.io/en/latest/quickstart.html)
 
-- [Full documentation](http://vsuite.readthedocs.io) [![Documentation Status](http://readthedocs.org/projects/vsuite/badge/?version=latest)](http://vsuite.readthedocs.io/en/latest/?badge=latest)
+- [Full documentation](https://vsuite.readthedocs.io) [![Documentation Status](https://readthedocs.org/projects/vsuite/badge/?version=latest)](https://vsuite.readthedocs.io/en/latest/?badge=latest)
 
 # CSL licenses
 
