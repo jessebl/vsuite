@@ -1,5 +1,5 @@
 User module
-==============
+===========
 
 .. automodule:: vsuite.user
    :members:
