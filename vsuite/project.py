@@ -6,6 +6,7 @@ import jinja2
 import dirsync
 import glob
 from .user import User
+from .asset import Asset
 
 class Project(User):
     """Represent a project directory
@@ -29,6 +30,12 @@ class Project(User):
         self.project_config = os.path.join(self.project_dir, 'config.ini')
         self.project_csl_dir = os.path.join(self.project_dir, 'csl')
         self.project_template_dir = os.path.join(self.project_dir, 'templates')
+        self.csl = Asset('csl', 'csl', 'csl', self.project_path)
+        self.templates = Asset('templates', 'templates', 'j2',\
+                self.project_path)
+        self.bibliographies = Asset('bibliographies', '..', 'bib',\
+                self.project_path)
+        self.assets = [self.csl, self.templates, self.bibliographies]
         # dict of paths relative to project_dir
         self.relpaths_project = {'project': '.',\
                 'csl_dir': 'csl',\
@@ -37,6 +44,7 @@ class Project(User):
         self.abspaths = self.get_abspaths()
         self.relpaths_pwd = self.get_relpaths()
         User.__init__(self)
+
 
     def init(self):
         """Initialize project directory
@@ -62,7 +70,7 @@ class Project(User):
         config = configparser.ConfigParser()
         config.read(self.project_config)
         bibliography_name = config['default']['bibliography']
-        bibliography_file = os.path.join(self.abspaths['bibliography_dir'],\
+        bibliography_file = os.path.join(self.abspaths['bibliographies'],\
                 bibliography_name)
         if not os.path.exists(bibliography_file):
             with open(bibliography_file, 'w') as bib:
@@ -128,7 +136,7 @@ class Project(User):
         config = configparser.ConfigParser()
         config.read(self.project_config)
         template = self.get_template(config, template_opt)
-        bibliography_path = os.path.join(self.abspaths['bibliography_dir'],\
+        bibliography_path = os.path.join(self.abspaths['bibliographies'],\
                 config['default']['bibliography'])
         bibliography_exists = os.path.exists(bibliography_path)
         rendered_template = template.render(relpaths=self.relpaths_pwd,\
@@ -252,9 +260,8 @@ class Project(User):
             dict: absolute paths of project paths (e.g. the project's csl_dir)
         """
         abspaths = {}
-        for subdir in self.relpaths_project:
-            abspath = os.path.join(self.project_dir, self.relpaths_project[subdir])
-            abspaths[subdir] = abspath
+        for asset in self.assets:
+            abspaths[asset.name] = asset.abspath()
         return abspaths
 
     def get_relpaths(self):
@@ -265,7 +272,6 @@ class Project(User):
 
         """
         relpaths = {}
-        for subdir in self.abspaths:
-            relpath = os.path.relpath(self.abspaths[subdir], os.getcwd())
-            relpaths[subdir] = relpath
+        for asset in self.assets:
+            relpaths[asset.name] = asset.relpath_pwd()
         return relpaths

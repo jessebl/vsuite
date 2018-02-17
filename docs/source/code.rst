@@ -6,3 +6,4 @@ Code documentation
 
    code_user
    code_project
+   code_asset

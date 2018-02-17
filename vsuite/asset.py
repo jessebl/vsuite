@@ -3,16 +3,16 @@ import glob
 
 class Asset():
     """Represent a category of vsuite assets
+
+    Args:
+        relpath (str): path to assset directory relative to .vsuite
+        file_extension (str): file extension of assets
+        project_path (str): path to project
+
     """
 
-    def __init__(self, relpath, file_extension, project_path):
-        """
-
-        Args:
-            relpath (str): path to assset directory relative to .vsuite
-            file_extension (str): file extension of assets
-
-        """
+    def __init__(self, name, relpath, file_extension, project_path):
+        self.name = name
         self.relpath = relpath
         self.file_extension = file_extension
         self.project_path = project_path
@@ -41,7 +41,7 @@ class Asset():
             str: relative path to asset
 
         """
-        relpath = os.path.relpath(self.abspath())
+        relpath = os.path.relpath(self.abspath(), os.getcwd())
         return relpath
 
     def abspaths(self):
