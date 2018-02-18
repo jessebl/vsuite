@@ -15,15 +15,12 @@ class Project(User):
     unless one of its parent directories is a project, in which case that
     directory is considered to be.
 
+    Initializing sets attributes about where various directories and project
+    resources would be, if they exist.
+
     """
 
     def __init__(self):
-        """Initialize vsuite for inheritance
-
-        Using information about the present directory, set attributes about
-        where various directories and project resources would be, if they exist.
-
-        """
         # self.project_path is absolute
         self.project_path = self.get_project_dir()
         self.project_dir = os.path.join(self.project_path, '.vsuite')
@@ -37,11 +34,6 @@ class Project(User):
                 self.project_path)
         self.assets = [self.csl, self.templates, self.bibliographies]
         # dict of paths relative to project_dir
-        self.relpaths_project = {'project': '.',\
-                'csl_dir': 'csl',\
-                'template_dir': 'templates',\
-                'bibliography_dir': os.pardir}
-        self.abspaths = self.get_abspaths()
         self.relpaths_pwd = self.get_relpaths()
         User.__init__(self)
 
@@ -70,7 +62,7 @@ class Project(User):
         config = configparser.ConfigParser()
         config.read(self.project_config)
         bibliography_name = config['default']['bibliography']
-        bibliography_file = os.path.join(self.abspaths['bibliographies'],\
+        bibliography_file = os.path.join(self.bibliographies.relpath_pwd(),\
                 bibliography_name)
         if not os.path.exists(bibliography_file):
             with open(bibliography_file, 'w') as bib:
@@ -136,7 +128,7 @@ class Project(User):
         config = configparser.ConfigParser()
         config.read(self.project_config)
         template = self.get_template(config, template_opt)
-        bibliography_path = os.path.join(self.abspaths['bibliographies'],\
+        bibliography_path = os.path.join(self.bibliographies.relpath_pwd(),\
                 config['default']['bibliography'])
         bibliography_exists = os.path.exists(bibliography_path)
         rendered_template = template.render(relpaths=self.relpaths_pwd,\
@@ -251,18 +243,6 @@ class Project(User):
         else:
             parent_dir = os.path.abspath(os.path.join(cursor_dir, os.pardir))
             return self.get_project_dir(parent_dir)
-
-
-    def get_abspaths(self):
-        """Get absolute paths of project resources
-
-        Returns:
-            dict: absolute paths of project paths (e.g. the project's csl_dir)
-        """
-        abspaths = {}
-        for asset in self.assets:
-            abspaths[asset.name] = asset.abspath()
-        return abspaths
 
     def get_relpaths(self):
         """Get paths of project resources relative to pwd
