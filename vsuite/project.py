@@ -20,9 +20,9 @@ class Project(User):
 
     """
 
-    def __init__(self, use_pwd=False):
+    def __init__(self, path=False):
         # self.project_path is absolute
-        self.project_path = self.get_project_dir(use_pwd=use_pwd)
+        self.project_path = self.get_project_dir(path=path)
         self.project_dir = os.path.join(self.project_path, '.vsuite')
         self.project_config = os.path.join(self.project_dir, 'config.ini')
         self.project_csl_dir = os.path.join(self.project_dir, 'csl')
@@ -32,7 +32,9 @@ class Project(User):
                 self.project_path)
         self.bibliographies = Asset('bibliographies', '..', 'bib',\
                 self.project_path)
-        self.assets = [self.csl, self.templates, self.bibliographies]
+        self.settings = Asset('settings', '.', 'ini', self.project_path)
+        self.assets = [self.csl, self.templates, self.bibliographies,\
+                self.settings]
         # dict of paths relative to project_dir
         self.relpaths_pwd = self.get_relpaths()
         User.__init__(self)
@@ -169,7 +171,7 @@ class Project(User):
         cmd = ['make', '-f', os.path.join(self.project_dir, 'makefile'), output]
         subprocess.run(cmd, cwd=os.getcwd())
 
-    def get_project_dir(self, cursor_dir=os.getcwd(), use_pwd=False):
+    def get_project_dir(self, cursor_dir=os.getcwd(), path=False):
         """Absolute path to consider as project directory
 
         Use present working directory if no parent directory is a project
@@ -182,14 +184,14 @@ class Project(User):
             str: absolute path
 
         """
-        if use_pwd:
-            return os.getcwd()
+        if path:
+            return path
         cursor_dir = os.path.abspath(cursor_dir)
         # If in existing project root
         in_project = os.path.exists(os.path.join(cursor_dir, '.vsuite'))
         if in_project:
             return cursor_dir
-        # If in filesystem root, return none
+        # If in filesystem root, return pwd
         elif cursor_dir == '/':
             return os.getcwd()
         else:
@@ -211,3 +213,34 @@ class Project(User):
         for asset in self.assets:
             relpaths[asset.name] = asset.relpath_pwd()
         return relpaths
+
+    def init_inherit(self):
+        """Initialize project directory
+
+        Reinitialize vsuite for the user, and initialize the present working
+        directory as a project directory, inheriting assets and settings from
+        the parents project
+        """
+        parent_project_dir = self.get_project_dir()
+        parent_project = Project(path=parent_project_dir)
+        parent_assets = parent_project.assets
+        self.global_init()
+        self.git_init()
+        self.create_project_dir()
+        for i in range(len(self.assets)):
+            self.copy_asset(parent_assets[i], self.assets[i])
+
+    def copy_asset(self, src_asset, dest_asset):
+        """Copy asset files from one asset to another
+
+        Args:
+            src_asset (vsuite.asset.Asset): asset to be copied
+            dest_asset (vsuite.asset.Asset): asset to receive files
+
+        """
+        assert (src_asset.name == dest_asset.name),\
+                'Not copying %s into %s' % (src_asset.name, dest_asset.name)
+        src_dir = src_asset.abspath()
+        dest_dir = dest_asset.abspath()
+        files = glob.glob(os.path.join(src_dir,'*.'+src_asset.file_extension))
+        [shutil.copy2(file, dest_dir) for file in files]

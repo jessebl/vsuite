@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import argparse
 import sys
+import os
 from .project import Project
 
 def parse_args():
@@ -23,6 +24,9 @@ def parse_args():
     parser_init.add_argument('-G', '--Global',\
             help='initialize global config',\
             action='store_true')
+    parser_init.add_argument('-i', '--inherit',\
+            help='inherit data and config from parent project',\
+            action='store_true')
     parser_new.add_argument('title',\
             help='document title')
     parser_new.add_argument('-t', '--template',\
@@ -36,11 +40,13 @@ def main():
     """
     Respond to subcommands, exit with code 127 without subcommands
     """
-    project_instance = Project(use_pwd=True)
+    project_instance = Project(path=os.getcwd())
     args, parser = parse_args()
     if args.subcommand == 'init':
         if args.Global:
             project_instance.global_init()
+        elif args.inherit:
+            project_instance.init_inherit()
         else:
             project_instance.init()
     elif args.subcommand == 'csl':
