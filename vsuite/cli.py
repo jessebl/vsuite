@@ -36,7 +36,7 @@ def main():
     """
     Respond to subcommands, exit with code 127 without subcommands
     """
-    project_instance = Project()
+    project_instance = Project(use_pwd=True)
     args, parser = parse_args()
     if args.subcommand == 'init':
         if args.Global:

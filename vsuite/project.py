@@ -20,9 +20,9 @@ class Project(User):
 
     """
 
-    def __init__(self):
+    def __init__(self, use_pwd=False):
         # self.project_path is absolute
-        self.project_path = self.get_project_dir()
+        self.project_path = self.get_project_dir(use_pwd=use_pwd)
         self.project_dir = os.path.join(self.project_path, '.vsuite')
         self.project_config = os.path.join(self.project_dir, 'config.ini')
         self.project_csl_dir = os.path.join(self.project_dir, 'csl')
@@ -169,7 +169,7 @@ class Project(User):
         cmd = ['make', '-f', os.path.join(self.project_dir, 'makefile'), output]
         subprocess.run(cmd, cwd=os.getcwd())
 
-    def get_project_dir(self, cursor_dir=os.getcwd()):
+    def get_project_dir(self, cursor_dir=os.getcwd(), use_pwd=False):
         """Absolute path to consider as project directory
 
         Use present working directory if no parent directory is a project
@@ -182,6 +182,8 @@ class Project(User):
             str: absolute path
 
         """
+        if use_pwd:
+            return os.getcwd()
         cursor_dir = os.path.abspath(cursor_dir)
         # If in existing project root
         in_project = os.path.exists(os.path.join(cursor_dir, '.vsuite'))
