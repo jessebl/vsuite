@@ -169,56 +169,6 @@ class Project(User):
         cmd = ['make', '-f', os.path.join(self.project_dir, 'makefile'), output]
         subprocess.run(cmd, cwd=os.getcwd())
 
-    def print_csl(self):
-        """Print CSL files available in project
-        """
-        csl_files = self.get_csl()
-        for csl in csl_files:
-            print(csl)
-        return csl_files
-
-    def get_csl(self):
-        """Get available csl files
-
-        Returns:
-            tuple: project's csl files if in project, user's csl files if not
-
-        """
-        global_csl_dir = os.path.join(self.global_data_dir, 'project_files/csl')
-        if self.in_project():
-            csl_files = self.get_csl_from_dir(self.project_csl_dir)
-        else:
-            csl_files = self.get_csl_from_dir(global_csl_dir)
-        return csl_files
-
-    def get_csl_from_dir(self, csl_dir):
-        """Return csl files in csl dir
-
-        Scan first level of directory for csl files
-
-        Args:
-            csl_dir (str): directory to scan 
-
-        Return:
-            tuple: relative path of csl files
-
-        """
-        csl_paths = glob.glob(csl_dir+'/*.csl')
-        csl_files = []
-        for csl_path in csl_paths:
-            csl_file = os.path.relpath(csl_path, csl_dir)
-            csl_files.append(csl_file)
-        return tuple(csl_files)
-
-    def in_project(self):
-        """Returns whether or not in project
-
-        Return:
-            bool: True if in project
-
-        """
-        return os.path.exists(self.project_dir)
-
     def get_project_dir(self, cursor_dir=os.getcwd()):
         """Absolute path to consider as project directory
 
@@ -246,6 +196,10 @@ class Project(User):
 
     def get_relpaths(self):
         """Get paths of project resources relative to pwd
+
+        Note:
+            Mostly legacy method, preserved only using all assets' relative
+            paths in ``self.create_doc()``
 
         Returns:
             dict: relative paths of project paths (e.g. the project's csl_dir)

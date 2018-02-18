@@ -44,7 +44,7 @@ def main():
         else:
             project_instance.init()
     elif args.subcommand == 'csl':
-        project_instance.print_csl()
+        project_instance.csl.print_files()
     elif args.subcommand == 'new':
         title = args.title
         template = args.template
