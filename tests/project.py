@@ -9,9 +9,9 @@ class ProjectTestCase(unittest.TestCase):
         self.project_dir = tempfile.mkdtemp()
         os.chdir(self.project_dir)
         self.project = Project()
+        self.project.init()
 
     def test_init(self):
-        self.project.init()
         self.init_project_assets()
 
     def init_project_assets(self):
@@ -28,6 +28,23 @@ class ProjectTestCase(unittest.TestCase):
         for path in paths:
             self.assertTrue(os.path.exists(paths[path]),\
                     msg=str(paths[path]+' does not exist'))
+
+    def test_create_doc(self):
+        doc = self.create_doc()
+
+    def test_create_doc_subdir(self):
+        subdir = 'subdir'
+        os.mkdir(subdir)
+        os.chdir(subdir)
+        # Check if same project is still recognized
+        self.assertEqual(self.project.project_path, self.project_dir)
+        # Ensure document creation works
+        doc = self.create_doc()
+
+    def create_doc(self):
+        title = 'test_doc'
+        self.project.create_doc(title)
+        return title
 
 if __name__ == '__main__':
     unittest.main()

@@ -104,7 +104,8 @@ class Project(User):
 
         """
         if not os.path.exists(self.project_dir):
-            raise FileExistsError('Not in a vsuite project')
+            raise FileExistsError('%s has not been initizalied as a vsuite '
+                    'project' % self.project_path)
 
     def create_doc(self, title, template_opt=None):
         """ Create new document with title name from template
