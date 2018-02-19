@@ -1,3 +1,8 @@
+[![Build
+Status](https://travis-ci.org/jessebl/vsuite.svg?branch=master)](https://travis-ci.org/jessebl/vsuite)
+[![Documentation
+Status](https://readthedocs.org/projects/vsuite/badge/?version=latest)](https://vsuite.readthedocs.io/en/latest/?badge=latest)
+
 # vsuite
 
 vsuite is a project management suite for Linux OSes aimed at writers who want
@@ -26,7 +31,7 @@ should always backup any data that matters.
 
 - [Quick Start](https://vsuite.readthedocs.io/en/latest/quickstart.html)
 
-- [Full documentation](https://vsuite.readthedocs.io) [![Documentation Status](https://readthedocs.org/projects/vsuite/badge/?version=latest)](https://vsuite.readthedocs.io/en/latest/?badge=latest)
+- [Full documentation](https://vsuite.readthedocs.io)
 
 # CSL licenses
 
