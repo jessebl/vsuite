@@ -35,3 +35,4 @@ pip-delete-this-directory.txt
 _build
 _static
 _templates
+docs/build/
