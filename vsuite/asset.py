@@ -8,15 +8,17 @@ class Asset():
         relpath (str): path to assset directory relative to .vsuite
         file_extension (str): file extension of assets
         project_path (str): path to project
+        data_dir (str): directory within ``project_path`` to hold data files
 
     """
 
-    def __init__(self, name, relpath, file_extension, project_path):
+    def __init__(self, name, relpath, file_extension, project_path,\
+            data_dir='.vsuite'):
         self.name = name
         self.relpath = relpath
         self.file_extension = file_extension
         self.project_path = project_path
-        self.project_dir = '.vsuite'
+        self.project_dir = data_dir
 
     def abspath(self):
         """Get absolute path to asset
