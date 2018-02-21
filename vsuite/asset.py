@@ -6,17 +6,18 @@ class Asset():
 
     Args:
         relpath (str): path to assset directory relative to .vsuite
-        file_extension (str): file extension of assets
+        file_expression (str): expression to match asset files,
+            parsed by glob.glob
         project_path (str): path to project
         data_dir (str): directory within ``project_path`` to hold data files
 
     """
 
-    def __init__(self, name, relpath, file_extension, project_path,\
+    def __init__(self, name, relpath, file_expression, project_path,\
             data_dir='.vsuite'):
         self.name = name
         self.relpath = relpath
-        self.file_extension = file_extension
+        self.file_expression = file_expression
         self.project_path = project_path
         self.project_dir = data_dir
 
@@ -55,7 +56,7 @@ class Asset():
             tuple: file paths
 
         """
-        file_pattern = os.path.join(self.abspath(), '*.'+self.file_extension)
+        file_pattern = os.path.join(self.abspath(), self.file_expression)
         files = glob.glob(file_pattern)
         return tuple(files)
 

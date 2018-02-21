@@ -27,12 +27,12 @@ class Project(User):
         self.project_config = os.path.join(self.project_dir, 'config.ini')
         self.project_csl_dir = os.path.join(self.project_dir, 'csl')
         self.project_template_dir = os.path.join(self.project_dir, 'templates')
-        self.csl = Asset('csl', 'csl', 'csl', self.project_path)
-        self.templates = Asset('templates', 'templates', 'j2',\
+        self.csl = Asset('csl', 'csl', '*.csl', self.project_path)
+        self.templates = Asset('templates', 'templates', '*.j2',\
                 self.project_path)
-        self.bibliographies = Asset('bibliographies', '..', 'bib',\
+        self.bibliographies = Asset('bibliographies', '..', '*.bib',\
                 self.project_path)
-        self.settings = Asset('settings', '.', 'ini', self.project_path)
+        self.settings = Asset('settings', '.', '*.ini', self.project_path)
         self.assets = [self.csl, self.templates, self.bibliographies,\
                 self.settings]
         # dict of paths relative to project_dir
@@ -243,5 +243,5 @@ class Project(User):
                 'Not copying %s into %s' % (src_asset.name, dest_asset.name)
         src_dir = src_asset.abspath()
         dest_dir = dest_asset.abspath()
-        files = glob.glob(os.path.join(src_dir,'*.'+src_asset.file_extension))
+        files = glob.glob(os.path.join(src_dir,src_asset.file_expression))
         [shutil.copy2(file, dest_dir) for file in files]
