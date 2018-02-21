@@ -5,6 +5,7 @@ import shutil
 import jinja2
 import dirsync
 import glob
+import copy
 from .user import User
 from .asset import Asset
 
@@ -81,11 +82,11 @@ class Project(User):
     def create_project_dir(self):
         """Create ``.vsuite`` directory if it doesn't exist
         """
-        # Create dummy method with info() method to supress dirsync output...
-        dummy_function = lambda x : None
-        dummy_logger = type('Dummy', (object,), {'info': dummy_function})
-        dirsync.sync(self.global_project_files, self.project_dir, 'sync',\
-                logger=dummy_logger, create=True)
+        user_assets = [copy.deepcopy(asset) for asset in self.assets]
+        for i in range(len(user_assets)):
+            user_assets[i].project_path = self.global_project_files
+            user_assets[i].project_dir = ''
+            self.copy_asset(user_assets[i], self.assets[i])
         self.init_project_config()
 
     def init_project_config(self):
@@ -244,5 +245,7 @@ class Project(User):
                 'Not copying %s into %s' % (src_asset.name, dest_asset.name)
         src_dir = src_asset.abspath()
         dest_dir = dest_asset.abspath()
+        if not os.path.exists(dest_dir):
+            os.makedirs(dest_dir)
         files = glob.glob(os.path.join(src_dir,src_asset.file_expression))
         [shutil.copy2(file, dest_dir) for file in files]

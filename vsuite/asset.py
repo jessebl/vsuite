@@ -10,6 +10,7 @@ class Asset():
             parsed by glob.glob
         project_path (str): path to project
         data_dir (str): directory within ``project_path`` to hold data files
+            (``.vsuite``, leave unless you know what you're doing)
 
     """
 
