@@ -33,8 +33,9 @@ class Project(User):
         self.bibliographies = Asset('bibliographies', '..', '*.bib',\
                 self.project_path)
         self.settings = Asset('settings', '.', '*.ini', self.project_path)
+        self.makefile = Asset('makefile', '.', 'makefile', self.project_path)
         self.assets = [self.csl, self.templates, self.bibliographies,\
-                self.settings]
+                self.settings, self.makefile]
         # dict of paths relative to project_dir
         self.relpaths_pwd = self.get_relpaths()
         User.__init__(self)

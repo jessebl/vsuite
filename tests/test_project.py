@@ -25,6 +25,7 @@ class ProjectTestCase(unittest.TestCase):
         paths['bibliography'] = os.path.join(self.project_dir,\
                 'bibliography.bib')
         paths['git'] = os.path.join(self.project_dir, '.git')
+        paths['makefile'] = os.path.join(paths['vsuite_dir'], 'makefile')
         for path in paths:
             self.assertTrue(os.path.exists(paths[path]),\
                     msg=str(paths[path]+' does not exist'))
