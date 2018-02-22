@@ -7,15 +7,16 @@ from vsuite.project import Project
 
 class ProjectTestCase(unittest.TestCase):
     def setUp(self):
+        """Initialize project as attribute
+        """
         self.project_dir = tempfile.mkdtemp()
         os.chdir(self.project_dir)
         self.project = Project()
         self.project.init()
 
-    def test_init(self):
-        self.init_project_assets()
-
-    def init_project_assets(self):
+    def test_init_project_assets(self):
+        """Initialize project assets
+        """
         paths = {}
         paths['git_path'] = os.path.join(self.project_dir, '.git')
         paths['vsuite_dir'] = os.path.join(self.project_dir,\
@@ -32,10 +33,14 @@ class ProjectTestCase(unittest.TestCase):
                     msg=str(paths[path]+' does not exist'))
 
     def test_create_doc(self):
+        """Create document in project root
+        """
         doc = self.create_doc()
         self.make_doc(doc)
 
     def test_create_doc_subdir(self):
+        """Create document in project subdirectory
+        """
         subdir = 'subdir'
         os.mkdir(subdir)
         os.chdir(subdir)

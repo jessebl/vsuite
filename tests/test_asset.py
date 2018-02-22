@@ -12,7 +12,7 @@ class AssetTestCase(unittest.TestCase):
         self.project.init()
 
     def test_asset_csl_files(self):
-        """Added because of failure while switching to Asset.file_expression
+        """Find CSL path in project
         """
         self.project.csl.abspaths()
 
