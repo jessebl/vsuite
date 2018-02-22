@@ -24,7 +24,7 @@ class User:
         self.global_config_file = os.path.join(self.global_config_dir, 'config.ini')
         self.global_data_dir = os.path.expanduser('~/.local/share/vsuite')
         self.global_project_files = os.path.join(self.global_data_dir,\
-                'project_files')
+                'project_skel/project_files')
         self.user_data_dir = os.path.expanduser('~/.local/share/vsuite')
         self.user_project_skel = os.path.join(self.user_data_dir,'project_skel')
         self.user_csl = Asset('csl', 'csl', '*.csl', self.user_project_skel,\
@@ -43,21 +43,10 @@ class User:
     def global_init(self):
         """Load global config after creating it if it doesn't exist
         """
-        self.global_config = self.get_global_config()
-        self.init_global_data_dir()
+        # self.global_config = self.get_global_config()
+        self.init_project_skel()
 
-    def init_global_data_dir(self):
-        """Copy project files to data dir
-        """
-        project_files_path = os.path.join(os.path.dirname(__file__),\
-                'project_files')
-        # Create dummy method with info() method to supress dirsync output...
-        dummy_function = lambda x : None
-        dummy_logger = type('Dummy', (object,), {'info': dummy_function})
-        dirsync.sync(project_files_path, self.global_project_files, 'sync',\
-                logger=dummy_logger, create=True)
-
-    def copy_project_skel(self):
+    def init_project_skel(self):
         """Create user data from vsuite skeleton
         """
         app_skel = os.path.join(os.path.dirname(__file__), 'project_skel')
