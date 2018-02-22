@@ -117,6 +117,9 @@ class Project(User):
             template_opt (str): Document template to override default template
                 set in project settings
 
+        Returns:
+            str: Document filename
+
         Raises:
             (FileExistsError): If file with same name already exists
 
@@ -141,6 +144,7 @@ class Project(User):
         # Save render to new doc
         with open(filename, 'w') as doc:
             doc.write(rendered_template)
+        return filename
 
     def get_template(self, config, template_opt):
         """Get template object to use for new document

@@ -1,6 +1,7 @@
 import os
 import tempfile
 import unittest
+import subprocess
 
 from vsuite.project import Project
 
@@ -32,6 +33,7 @@ class ProjectTestCase(unittest.TestCase):
 
     def test_create_doc(self):
         doc = self.create_doc()
+        self.make_doc(doc)
 
     def test_create_doc_subdir(self):
         subdir = 'subdir'
@@ -41,11 +43,19 @@ class ProjectTestCase(unittest.TestCase):
         self.assertEqual(self.project.project_path, self.project_dir)
         # Ensure document creation works
         doc = self.create_doc()
+        self.make_doc(doc)
 
     def create_doc(self):
         title = 'test_doc'
-        self.project.create_doc(title)
-        return title
+        filename = self.project.create_doc(title)
+        return filename
+
+    def make_doc(self, filename):
+        if os.getenv('TEST_MAKE') == '1':
+            target = os.path.splitext(filename)[0]
+            cmd = ['pandoc', filename, '-o', target+'.pdf']
+            with open(os.devnull, 'w') as fp:
+                subprocess.run(cmd, stdout=fp)
 
 if __name__ == '__main__':
     unittest.main()
