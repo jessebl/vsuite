@@ -21,8 +21,8 @@ def parse_args():
     parser_make = subparsers.add_parser('make',\
             help='make document from markdown file')
     # Capital G since 'global' is a keyword which makes args.global is invalid
-    parser_init.add_argument('-G', '--Global',\
-            help='initialize global config',\
+    parser_init.add_argument('-u', '--user',\
+            help='initialize user config',\
             action='store_true')
     parser_init.add_argument('-i', '--inherit',\
             help='inherit data and config from parent project',\
@@ -43,7 +43,7 @@ def main():
     project_instance = Project(path=os.getcwd())
     args, parser = parse_args()
     if args.subcommand == 'init':
-        if args.Global:
+        if args.user:
             project_instance.global_init()
         elif args.inherit:
             project_instance.init_inherit()

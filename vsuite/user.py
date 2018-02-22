@@ -13,17 +13,17 @@ from .asset import Asset
 class User:
     """Represent a single user's vsuite installation
 
-    Track and manage vsuite's data files, global config, and more
+    Track and manage vsuite's data files, user config, and more
 
     """
 
     def __init__(self):
         """Initialize vsuite object's constant attributes
         """
-        self.global_config_dir = os.path.expanduser('~/.config/vsuite')
-        self.global_config_file = os.path.join(self.global_config_dir, 'config.ini')
-        self.global_data_dir = os.path.expanduser('~/.local/share/vsuite')
-        self.global_project_files = os.path.join(self.global_data_dir,\
+        self.user_config_dir = os.path.expanduser('~/.config/vsuite')
+        self.user_config_file = os.path.join(self.user_config_dir, 'config.ini')
+        self.user_data_dir = os.path.expanduser('~/.local/share/vsuite')
+        self.user_project_files = os.path.join(self.user_data_dir,\
                 'project_skel/project_files')
         self.user_data_dir = os.path.expanduser('~/.local/share/vsuite')
         self.user_project_skel = os.path.join(self.user_data_dir,'project_skel')
@@ -40,10 +40,10 @@ class User:
         self.user_assets = [self.user_csl, self.user_templates,\
                 self.user_bibliographies, self.user_settings,self.user_makefile]
 
-    def global_init(self):
-        """Load global config after creating it if it doesn't exist
+    def user_init(self):
+        """Load user config after creating it if it doesn't exist
         """
-        # self.global_config = self.get_global_config()
+        # self.user_config = self.get_user_config()
         self.init_project_skel()
 
     def init_project_skel(self):
@@ -56,29 +56,29 @@ class User:
             app_assets[i].project_dir = '.vsuite'
             self.copy_asset(app_assets[i], self.user_assets[i])
 
-    def get_global_config(self):
-        """Get user's global vsuite config
+    def get_user_config(self):
+        """Get user's user vsuite config
 
         Get existing config if it exists
         Get and save newly-generated config if it doesn't
 
         Returns:
-            configparser.ConfigParser: user's global configuration
+            configparser.ConfigParser: user's user configuration
 
         """
-        if os.path.exists(self.global_config_file):
-            config = self.read_global_config()
+        if os.path.exists(self.user_config_file):
+            config = self.read_user_config()
         else:
-            config = self.init_global_config()
+            config = self.init_user_config()
         return config
 
-    def init_global_config(self):
-        """Initialize global config
+    def init_user_config(self):
+        """Initialize user config
 
         Create new config, refusing to overwrite existing one
 
         Returns:
-            configparser.ConfigParser: user's global configuration
+            configparser.ConfigParser: user's user configuration
 
         """
         config = configparser.ConfigParser()
@@ -87,10 +87,10 @@ class User:
                 'author': self.get_fullname(),
                 'bibliography': 'bibliography.bib',
                 'template': 'default.j2'}
-        # Write global_config_file in global_config_dir
-        if not os.path.exists(self.global_config_dir):
-            os.makedirs(self.global_config_dir)
-        with open(self.global_config_file, 'w') as configfile:
+        # Write user_config_file in user_config_dir
+        if not os.path.exists(self.user_config_dir):
+            os.makedirs(self.user_config_dir)
+        with open(self.user_config_file, 'w') as configfile:
             config.write(configfile)
         return config
 
@@ -108,11 +108,11 @@ class User:
         username = username.replace(",","")
         return username
 
-    def read_global_config(self):
+    def read_user_config(self):
         """Get existing user config
         """
         config = configparser.ConfigParser()
-        config.read(self.global_config_file)
+        config.read(self.user_config_file)
         return config
 
     def copy_asset(self, src_asset, dest_asset):

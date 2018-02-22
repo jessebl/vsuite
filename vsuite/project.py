@@ -51,7 +51,7 @@ class Project(User):
         repo.
 
         """
-        self.global_init()
+        self.user_init()
         self.git_init()
         self.create_project_dir()
         self.create_bibliography()
@@ -84,7 +84,7 @@ class Project(User):
         """
         user_assets = [copy.deepcopy(asset) for asset in self.assets]
         for i in range(len(user_assets)):
-            user_assets[i].project_path = self.global_project_files
+            user_assets[i].project_path = self.user_project_files
             user_assets[i].project_dir = ''
             self.copy_asset(user_assets[i], self.assets[i])
         self.init_project_config()
@@ -94,7 +94,7 @@ class Project(User):
         Copy user config into project
         """
         config = configparser.ConfigParser()
-        config.read(self.global_config_file)
+        config.read(self.user_config_file)
         with open(self.project_config, 'w') as configfile:
             config.write(configfile)
 
@@ -231,7 +231,7 @@ class Project(User):
         parent_project_dir = self.get_project_dir()
         parent_project = Project(path=parent_project_dir)
         parent_assets = parent_project.assets
-        self.global_init()
+        self.user_init()
         self.git_init()
         self.create_project_dir()
         for i in range(len(self.assets)):
