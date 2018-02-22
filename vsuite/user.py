@@ -5,6 +5,10 @@ import getpass
 import pwd
 import shutil
 import dirsync
+import copy
+import glob
+
+from .asset import Asset
 
 class User:
     """Represent a single user's vsuite installation
@@ -21,6 +25,20 @@ class User:
         self.global_data_dir = os.path.expanduser('~/.local/share/vsuite')
         self.global_project_files = os.path.join(self.global_data_dir,\
                 'project_files')
+        self.user_data_dir = os.path.expanduser('~/.local/share/vsuite')
+        self.user_project_skel = os.path.join(self.user_data_dir,'project_skel')
+        self.user_csl = Asset('csl', 'csl', '*.csl', self.user_project_skel,\
+                data_dir='project_files')
+        self.user_templates = Asset('templates', 'templates', '*.j2',\
+                self.user_project_skel, data_dir='project_files')
+        self.user_bibliographies = Asset('bibliographies', '..', '*.bib',\
+                self.user_project_skel, data_dir='project_files')
+        self.user_settings = Asset('settings', '.', '*.ini',\
+                self.user_project_skel, data_dir='project_files')
+        self.user_makefile = Asset('makefile', '.', 'makefile',\
+                self.user_project_skel, data_dir='project_files')
+        self.user_assets = [self.user_csl, self.user_templates,\
+                self.user_bibliographies, self.user_settings,self.user_makefile]
 
     def global_init(self):
         """Load global config after creating it if it doesn't exist
@@ -38,6 +56,16 @@ class User:
         dummy_logger = type('Dummy', (object,), {'info': dummy_function})
         dirsync.sync(project_files_path, self.global_project_files, 'sync',\
                 logger=dummy_logger, create=True)
+
+    def copy_project_skel(self):
+        """Create user data from vsuite skeleton
+        """
+        app_skel = os.path.join(os.path.dirname(__file__), 'project_skel')
+        app_assets = [copy.deepcopy(asset) for asset in self.user_assets]
+        for i in range(len(app_assets)):
+            app_assets[i].project_path = app_skel
+            app_assets[i].project_dir = '.vsuite'
+            self.copy_asset(app_assets[i], self.user_assets[i])
 
     def get_global_config(self):
         """Get user's global vsuite config
@@ -97,3 +125,20 @@ class User:
         config = configparser.ConfigParser()
         config.read(self.global_config_file)
         return config
+
+    def copy_asset(self, src_asset, dest_asset):
+        """Copy asset files from one asset to another
+
+        Args:
+            src_asset (vsuite.asset.Asset): asset to be copied
+            dest_asset (vsuite.asset.Asset): asset to receive files
+
+        """
+        assert (src_asset.name == dest_asset.name),\
+                'Not copying %s into %s' % (src_asset.name, dest_asset.name)
+        src_dir = src_asset.abspath()
+        dest_dir = dest_asset.abspath()
+        if not os.path.exists(dest_dir):
+            os.makedirs(dest_dir)
+        files = glob.glob(os.path.join(src_dir,src_asset.file_expression))
+        [shutil.copy2(file, dest_dir) for file in files]
