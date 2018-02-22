@@ -5,10 +5,11 @@ class Asset():
     """Represent a category of vsuite assets
 
     Args:
-        relpath (str): path to assset directory relative to .vsuite
+        name (str): name of the asset (e.g. "bibliographies")
+        relpath (str): path to assset directory relative to `project_path`
         file_expression (str): expression to match asset files,
             parsed by glob.glob
-        project_path (str): path to project
+        project_path (str): path to project or other reference directory
         data_dir (str): directory within ``project_path`` to hold data files
             (``.vsuite``, leave unless you know what you're doing)
 

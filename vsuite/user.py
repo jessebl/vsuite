@@ -23,10 +23,9 @@ class User:
         self.user_config_dir = os.path.expanduser('~/.config/vsuite')
         self.user_config_file = os.path.join(self.user_config_dir, 'config.ini')
         self.user_data_dir = os.path.expanduser('~/.local/share/vsuite')
+        self.user_project_skel = os.path.join(self.user_data_dir,'project_skel')
         self.user_project_files = os.path.join(self.user_data_dir,\
                 'project_skel/project_files')
-        self.user_data_dir = os.path.expanduser('~/.local/share/vsuite')
-        self.user_project_skel = os.path.join(self.user_data_dir,'project_skel')
         self.user_csl = Asset('csl', 'csl', '*.csl', self.user_project_skel,\
                 data_dir='project_files')
         self.user_templates = Asset('templates', 'templates', '*.j2',\
@@ -37,13 +36,15 @@ class User:
                 self.user_project_skel, data_dir='project_files')
         self.user_makefile = Asset('makefile', '.', 'makefile',\
                 self.user_project_skel, data_dir='project_files')
+        self.user_config = Asset('config', '.', self.user_config_file,\
+                self.user_config_dir, data_dir='')
         self.user_assets = [self.user_csl, self.user_templates,\
                 self.user_bibliographies, self.user_settings,self.user_makefile]
 
     def user_init(self):
         """Load user config after creating it if it doesn't exist
         """
-        # self.user_config = self.get_user_config()
+        self.user_config = self.get_user_config()
         self.init_project_skel()
 
     def init_project_skel(self):
