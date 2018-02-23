@@ -40,12 +40,14 @@ def main():
     """
     Respond to subcommands, exit with code 127 without subcommands
     """
-    project_instance = Project(path=os.getcwd())
+    project_instance = Project()
     args, parser = parse_args()
     if args.subcommand == 'init':
         if args.user:
-            project_instance.global_init()
+            project_instance.__init__(path=os.getcwd())
+            project_instance.user_init()
         elif args.inherit:
+            project_instance.__init__(path=os.getcwd())
             project_instance.init_inherit()
         else:
             project_instance.init()
