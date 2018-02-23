@@ -20,7 +20,6 @@ def parse_args():
             help='create new doc from template')
     parser_make = subparsers.add_parser('make',\
             help='make document from markdown file')
-    # Capital G since 'global' is a keyword which makes args.global is invalid
     parser_init.add_argument('-u', '--user',\
             help='initialize user config',\
             action='store_true')

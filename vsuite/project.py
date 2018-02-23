@@ -33,10 +33,10 @@ class Project(User):
                 self.project_path)
         self.bibliographies = Asset('bibliographies', '..', '*.bib',\
                 self.project_path)
-        self.settings = Asset('settings', '.', '*.ini', self.project_path)
+        self.config = Asset('config', '.', '*.ini', self.project_path)
         self.makefile = Asset('makefile', '.', 'makefile', self.project_path)
         self.assets = [self.csl, self.templates, self.bibliographies,\
-                self.settings, self.makefile]
+                self.config, self.makefile]
         # dict of paths relative to project_dir
         self.relpaths_pwd = self.get_relpaths()
         User.__init__(self)
@@ -61,7 +61,7 @@ class Project(User):
         """Create bibliography if it doesn't exist
 
         Bibliography checked and created with ``bibliography`` value from
-        project settings
+        project config
         """
         config = configparser.ConfigParser()
         config.read(self.project_config)
@@ -114,7 +114,7 @@ class Project(User):
         Args:
             title (str): Title of document, used as basis for filename
             template_opt (str): Document template to override default template
-                set in project settings
+                set in project config
 
         Returns:
             str: Document filename
@@ -155,7 +155,7 @@ class Project(User):
             jinja2.environment.Template: template to use
 
         """
-        # Get default tempalte from project settings
+        # Get default tempalte from project config
         default_template = config['default']['template']
         # Render template
         jinja_loader = jinja2.FileSystemLoader(self.project_template_dir)
@@ -224,7 +224,7 @@ class Project(User):
         """Initialize project directory
 
         Reinitialize vsuite for the user, and initialize the present working
-        directory as a project directory, inheriting assets and settings from
+        directory as a project directory, inheriting assets and config from
         the parents project
         """
         parent_project_dir = self.get_project_dir()
