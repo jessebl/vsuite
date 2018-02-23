@@ -29,6 +29,14 @@ class UserTestCase(unittest.TestCase):
             self.assertTrue(os.path.exists(paths[path]),\
                     msg=str(paths[path]+' does not exist'))
 
+    def test_get_user_config(self):
+        """Get user config
+        """
+        config_path = os.path.expanduser('~/.config/vsuite/config.ini')
+        if os.path.exists(config_path):
+            os.remove(config_path)
+        self.user.get_user_config()
+        self.assertTrue(os.path.exists(config_path))
 
 if __name__ == '__main__':
     unittest.main()
