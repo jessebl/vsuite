@@ -54,23 +54,6 @@ class Project(User):
         self.user_init()
         self.git_init()
         self.create_project_dir()
-        self.create_bibliography()
-
-
-    def create_bibliography(self):
-        """Create bibliography if it doesn't exist
-
-        Bibliography checked and created with ``bibliography`` value from
-        project config
-        """
-        config = configparser.ConfigParser()
-        config.read(self.project_config)
-        bibliography_name = config['default']['bibliography']
-        bibliography_file = os.path.join(self.bibliographies.relpath_pwd(),\
-                bibliography_name)
-        if not os.path.exists(bibliography_file):
-            with open(bibliography_file, 'w') as bib:
-                bib.write('')
 
     def git_init(self):
         """Initialize git repository in project_path
