@@ -21,7 +21,6 @@ class UserTestCase(unittest.TestCase):
                 'project_files')
         paths['csl'] = os.path.join(paths['vsuite_dir'], 'csl')
         paths['templates'] = os.path.join(paths['vsuite_dir'], 'templates')
-        paths['config'] = os.path.join(paths['vsuite_dir'], 'config.ini')
         paths['bibliography'] = os.path.join(project_skel_dest,\
                 'bibliography.bib')
         paths['makefile'] = os.path.join(paths['vsuite_dir'], 'makefile')

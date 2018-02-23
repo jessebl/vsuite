@@ -32,14 +32,12 @@ class User:
                 self.user_project_skel, data_dir='project_files')
         self.user_bibliographies = Asset('bibliographies', '..', '*.bib',\
                 self.user_project_skel, data_dir='project_files')
-        self.user_settings = Asset('settings', '.', '*.ini',\
-                self.user_project_skel, data_dir='project_files')
         self.user_makefile = Asset('makefile', '.', 'makefile',\
                 self.user_project_skel, data_dir='project_files')
-        self.user_config = Asset('config', '.', self.user_config_file,\
+        self.user_config = Asset('config', '.', 'config.ini',\
                 self.user_config_dir, data_dir='')
         self.user_assets = [self.user_csl, self.user_templates,\
-                self.user_bibliographies, self.user_settings,self.user_makefile]
+                self.user_bibliographies, self.user_config, self.user_makefile]
 
     def user_init(self):
         """Load user config after creating it if it doesn't exist

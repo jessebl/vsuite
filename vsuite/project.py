@@ -65,20 +65,8 @@ class Project(User):
     def create_project_dir(self):
         """Create ``.vsuite`` directory if it doesn't exist
         """
-        user_assets = [copy.deepcopy(asset) for asset in self.assets]
-        for i in range(len(user_assets)):
-            user_assets[i].project_path = self.user_project_files
-            user_assets[i].project_dir = ''
-            self.copy_asset(user_assets[i], self.assets[i])
-        self.init_project_config()
-
-    def init_project_config(self):
-        """
-        Copy user config into project
-        """
-        config = self.get_user_config()
-        with open(self.project_config, 'w') as configfile:
-            config.write(configfile)
+        for i in range(len(self.user_assets)):
+            self.copy_asset(self.user_assets[i], self.assets[i])
 
     def check_for_project(self):
         """Verify that current directory is a project
