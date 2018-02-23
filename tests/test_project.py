@@ -58,6 +58,7 @@ class ProjectTestCase(unittest.TestCase):
     def make_doc(self, filename):
         if os.getenv('TEST_MAKE') == '1':
             target = os.path.splitext(filename)[0]
+            print('making', target)
             cmd = ['pandoc', filename, '-o', target+'.pdf']
             with open(os.devnull, 'w') as fp:
                 subprocess.run(cmd, stdout=fp)
