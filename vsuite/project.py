@@ -22,12 +22,9 @@ class Project(User):
     """
 
     def __init__(self, path=False):
-        # self.project_path is absolute
         self.project_path = self.get_project_dir(path=path)
         self.project_dir = os.path.join(self.project_path, '.vsuite')
         self.project_config = os.path.join(self.project_dir, 'config.ini')
-        self.project_csl_dir = os.path.join(self.project_dir, 'csl')
-        self.project_template_dir = os.path.join(self.project_dir, 'templates')
         self.csl = Asset('csl', 'csl', '*.csl', self.project_path)
         self.templates = Asset('templates', 'templates', '*.j2',\
                 self.project_path)
@@ -115,7 +112,7 @@ class Project(User):
         # Get default tempalte from project config
         default_template = config['default']['template']
         # Render template
-        jinja_loader = jinja2.FileSystemLoader(self.project_template_dir)
+        jinja_loader = jinja2.FileSystemLoader(self.templates.abspath())
         jinja_env = jinja2.Environment(loader=jinja_loader)
         template_file = template_opt if template_opt else default_template
         template = jinja_env.get_template(template_file)
