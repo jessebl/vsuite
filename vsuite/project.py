@@ -93,8 +93,7 @@ class Project(User):
         """
         Copy user config into project
         """
-        config = configparser.ConfigParser()
-        config.read(self.user_config_file)
+        config = self.get_user_config()
         with open(self.project_config, 'w') as configfile:
             config.write(configfile)
 

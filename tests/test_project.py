@@ -62,5 +62,14 @@ class ProjectTestCase(unittest.TestCase):
             with open(os.devnull, 'w') as fp:
                 subprocess.run(cmd, stdout=fp)
 
+    def test_no_user_config(self):
+        """Create working project while user config missing
+        """
+        config_file = os.path.expanduser('~/.config/vsuite/config.ini')
+        os.remove(config_file)
+        self.project.init()
+        doc = self.create_doc()
+        self.make_doc(doc)
+
 if __name__ == '__main__':
     unittest.main()
