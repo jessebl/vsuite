@@ -41,7 +41,6 @@ class Project(User):
         self.relpaths_pwd = self.get_relpaths()
         User.__init__(self)
 
-
     def init(self):
         """Initialize project directory
 
@@ -53,7 +52,9 @@ class Project(User):
         """
         self.user_init()
         self.git_init()
-        self.create_project_dir()
+        # Inherit all assets from user
+        for i in range(len(self.user_assets)):
+            self.copy_asset(self.user_assets[i], self.assets[i])
 
     def git_init(self):
         """Initialize git repository in project_path
@@ -61,12 +62,6 @@ class Project(User):
         cmd = ['git', 'init']
         with open(os.devnull, 'w') as fp:
             subprocess.run(cmd, cwd=self.project_path, stdout=fp)
-
-    def create_project_dir(self):
-        """Create ``.vsuite`` directory if it doesn't exist
-        """
-        for i in range(len(self.user_assets)):
-            self.copy_asset(self.user_assets[i], self.assets[i])
 
     def create_doc(self, title, template_opt=None):
         """ Create new document with title name from template
@@ -192,8 +187,4 @@ class Project(User):
         parent_project_dir = self.get_project_dir()
         parent_project = Project(path=parent_project_dir)
         parent_assets = parent_project.assets
-        self.user_init()
-        self.git_init()
-        self.create_project_dir()
-        for i in range(len(self.assets)):
-            self.copy_asset(parent_assets[i], self.assets[i])
+        self.init()
