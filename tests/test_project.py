@@ -1,6 +1,7 @@
 import os
 import tempfile
 import unittest
+import shutil
 import subprocess
 
 from vsuite.project import Project
@@ -71,6 +72,17 @@ class ProjectTestCase(unittest.TestCase):
         self.project.init()
         doc = self.create_doc()
         self.make_doc(doc)
+
+    def test_create_doc_no_project(self):
+        """Document creation fails outside of project
+        """
+        project_files = os.path.join(self.project_dir, '.vsuite')
+        shutil.rmtree(project_files)
+        try:
+            self.create_doc()
+        except FileExistsError:
+            excepted = True
+        self.assertTrue(excepted,msg='create_doc() succeeds outside of project')
 
 if __name__ == '__main__':
     unittest.main()

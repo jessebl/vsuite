@@ -55,7 +55,12 @@ def main():
     elif args.subcommand == 'new':
         title = args.title
         template = args.template
-        project_instance.create_doc(title, template)
+        try:
+            project_instance.create_doc(title, template)
+        except FileExistsError:
+            print('Cannot create document outside of vsuite project\n'
+                    'Initialize new project with "vs init"')
+            sys.exit(1)
     elif args.subcommand == 'make':
         output = args.output
         project_instance.make(output)

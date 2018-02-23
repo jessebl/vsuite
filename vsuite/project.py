@@ -68,17 +68,6 @@ class Project(User):
         for i in range(len(self.user_assets)):
             self.copy_asset(self.user_assets[i], self.assets[i])
 
-    def check_for_project(self):
-        """Verify that current directory is a project
-
-        Raises:
-            (FileExistsError): If not in a project directory
-
-        """
-        if not os.path.exists(self.project_dir):
-            raise FileExistsError('%s has not been initizalied as a vsuite '
-                    'project' % self.project_path)
-
     def create_doc(self, title, template_opt=None):
         """ Create new document with title name from template
 
@@ -94,7 +83,9 @@ class Project(User):
             (FileExistsError): If file with same name already exists
 
         """
-        self.check_for_project()
+        if not os.path.exists(self.project_dir):
+            raise FileExistsError('%s has not been initizalied as a vsuite '
+                    'project' % self.project_path)
         file_extension = '.md'
         # Replace special characters in filename that make doesn't handle
         filename = title+file_extension
