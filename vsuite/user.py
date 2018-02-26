@@ -40,9 +40,9 @@ class User:
                 self.user_bibliographies, self.user_config, self.user_makefile]
 
     def user_init(self):
-        """Load user config after creating it if it doesn't exist
+        """Ensure existence of user config and user data
         """
-        self.user_config = self.get_user_config()
+        self.get_user_config()
         self.init_project_skel()
 
     def init_project_skel(self):
