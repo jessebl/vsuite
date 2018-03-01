@@ -52,7 +52,7 @@ class User:
         for i in range(len(app_assets)):
             app_assets[i].project_path = app_skel
             app_assets[i].project_dir = '.vsuite'
-            app_assets[i].copy_asset(self.user_assets[i])
+            app_assets[i].copy_to(self.user_assets[i])
 
     def get_user_config(self):
         """Get user's user vsuite config

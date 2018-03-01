@@ -79,7 +79,7 @@ class Asset():
         """
         [print(asset_file) for asset_file in self.files()]
 
-    def copy_asset(self, dest_asset):
+    def copy_to(self, dest_asset):
         """Copy asset files from self to another asset
 
         Args:

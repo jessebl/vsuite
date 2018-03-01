@@ -50,7 +50,7 @@ class Project(User):
         self.git_init()
         # Inherit all assets from user
         for i in range(len(self.user_assets)):
-            self.user_assets[i].copy_asset(self.assets[i])
+            self.user_assets[i].copy_to(self.assets[i])
 
     def git_init(self):
         """Initialize git repository in project_path
