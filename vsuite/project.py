@@ -1,7 +1,6 @@
 import os
 import subprocess
 import configparser
-import shutil
 import jinja2
 import dirsync
 import glob
@@ -51,7 +50,7 @@ class Project(User):
         self.git_init()
         # Inherit all assets from user
         for i in range(len(self.user_assets)):
-            self.copy_asset(self.user_assets[i], self.assets[i])
+            self.user_assets[i].copy_asset(self.assets[i])
 
     def git_init(self):
         """Initialize git repository in project_path

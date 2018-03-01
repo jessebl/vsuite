@@ -1,4 +1,5 @@
 import os
+import shutil
 import glob
 
 class Asset():
@@ -77,3 +78,19 @@ class Asset():
         """Print asset files, newline delimitedfile names
         """
         [print(asset_file) for asset_file in self.files()]
+
+    def copy_asset(self, dest_asset):
+        """Copy asset files from self to another asset
+
+        Args:
+            dest_asset (vsuite.asset.Asset): asset to receive files
+
+        """
+        assert (self.name == dest_asset.name),\
+                'Not copying %s into %s' % (self.name, dest_asset.name)
+        src_dir = self.abspath()
+        dest_dir = dest_asset.abspath()
+        if not os.path.exists(dest_dir):
+            os.makedirs(dest_dir)
+        files = glob.glob(os.path.join(src_dir,self.file_expression))
+        [shutil.copy2(file, dest_dir) for file in files]

@@ -3,7 +3,6 @@ import subprocess
 import configparser
 import getpass
 import pwd
-import shutil
 import dirsync
 import copy
 import glob
@@ -53,7 +52,7 @@ class User:
         for i in range(len(app_assets)):
             app_assets[i].project_path = app_skel
             app_assets[i].project_dir = '.vsuite'
-            self.copy_asset(app_assets[i], self.user_assets[i])
+            app_assets[i].copy_asset(self.user_assets[i])
 
     def get_user_config(self):
         """Get user's user vsuite config
@@ -113,20 +112,3 @@ class User:
         config = configparser.ConfigParser()
         config.read(self.user_config_file)
         return config
-
-    def copy_asset(self, src_asset, dest_asset):
-        """Copy asset files from one asset to another
-
-        Args:
-            src_asset (vsuite.asset.Asset): asset to be copied
-            dest_asset (vsuite.asset.Asset): asset to receive files
-
-        """
-        assert (src_asset.name == dest_asset.name),\
-                'Not copying %s into %s' % (src_asset.name, dest_asset.name)
-        src_dir = src_asset.abspath()
-        dest_dir = dest_asset.abspath()
-        if not os.path.exists(dest_dir):
-            os.makedirs(dest_dir)
-        files = glob.glob(os.path.join(src_dir,src_asset.file_expression))
-        [shutil.copy2(file, dest_dir) for file in files]
