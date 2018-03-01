@@ -1,11 +1,8 @@
 import os
-import subprocess
 import configparser
 import getpass
 import pwd
-import dirsync
 import copy
-import glob
 
 from .asset import Asset
 

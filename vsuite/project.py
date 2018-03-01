@@ -2,9 +2,7 @@ import os
 import subprocess
 import configparser
 import jinja2
-import dirsync
-import glob
-import copy
+
 from .user import User
 from .asset import Asset
 

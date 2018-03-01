@@ -41,7 +41,7 @@ setup(
 
     include_package_data = True,
 
-    install_requires=['jinja2', 'dirsync'],  # Optional
+    install_requires=['jinja2'],  # Optional
 
     entry_points={  # Optional
         'console_scripts': [

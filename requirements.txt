@@ -1,4 +1,3 @@
 jinja2
-dirsync
 # Documentation requirements
 sphinx_rtd_theme
