@@ -28,6 +28,7 @@ matters.
    :maxdepth: 2
    :caption: Contents:
 
+   why
    installation
    quickstart
    code
