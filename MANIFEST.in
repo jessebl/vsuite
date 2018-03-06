@@ -1,1 +1,1 @@
-recursive-include vsuite/project_files *
+recursive-include vsuite/project_skel *
